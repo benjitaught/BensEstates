@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Valuation | Ben's Estates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<header class="site-header solid" id="header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo-bs-white.png" alt="Ben's Estates" class="logo-img" style="height:44px;width:auto;" /></a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <a href="properties.html">Properties</a>
+        <div class="dropdown-menu">
+          <a href="properties.html">Active Listings</a>
+          <a href="sold.html">Sold Properties</a>
+        </div>
+      </div>
+      <a href="neighborhoods.html">Neighborhoods</a>
+      <a href="home-valuation.html" class="active">Home Valuation</a>
+      <a href="buyers.html">Buyers</a>
+      <a href="sellers.html">Sellers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="tel:+17634478781" class="nav-phone">(763) 447-8781</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get In Touch</a>
+    </div>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="properties.html">Active Listings</a>
+  <a href="sold.html">Sold Properties</a>
+  <a href="neighborhoods.html">Neighborhoods</a>
+  <a href="home-valuation.html">Home Valuation</a>
+  <a href="buyers.html">Buyers Guide</a>
+  <a href="sellers.html">Sellers Guide</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+</div>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> › Home Valuation</div>
+  <h1>What's Your Home Worth?</h1>
+  <p>Get a free, no-obligation Comparative Market Analysis based on real data — not automated guesses.</p>
+</div>
+
+<!-- How it works -->
+<section class="section" style="background:var(--bg-2);">
+  <div class="container">
+    <div class="section-center mb-48">
+      <span class="section-label">The Process</span>
+      <h2>How It Works</h2>
+    </div>
+    <div class="valuation-steps">
+      <div class="valuation-step">
+        <div class="step-num">1</div>
+        <h4>Submit Your Info</h4>
+        <p>Fill out the form below with your home's basic details. It takes less than 2 minutes.</p>
+      </div>
+      <div class="valuation-step">
+        <div class="step-num">2</div>
+        <h4>I Run the Analysis</h4>
+        <p>I personally review comparable sales, market trends, and your home's unique features.</p>
+      </div>
+      <div class="valuation-step">
+        <div class="step-num">3</div>
+        <h4>You Get Your CMA</h4>
+        <p>Receive a detailed, professional market analysis — usually within 24 hours. No strings attached.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Valuation Form -->
+<section class="section">
+  <div class="container">
+    <div class="valuation-form-wrap">
+      <div class="section-center" style="margin-bottom:36px;">
+        <span class="section-label">Free CMA</span>
+        <h2>Request Your Valuation</h2>
+        <p>All fields are kept confidential. I'll reach out within 24 hours.</p>
+      </div>
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label">Property Address *</label>
+          <input class="form-input" type="text" placeholder="7301 Ohms Lane, Suite #300" required />
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">City *</label>
+            <input class="form-input" type="text" placeholder="Your City" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">ZIP Code *</label>
+            <input class="form-input" type="text" placeholder="12345" required />
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Bedrooms</label>
+            <select class="form-select">
+              <option>Select</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5</option><option>6+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bathrooms</label>
+            <select class="form-select">
+              <option>Select</option>
+              <option>1</option><option>1.5</option><option>2</option>
+              <option>2.5</option><option>3</option><option>3.5</option><option>4+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Approx. Square Footage</label>
+            <input class="form-input" type="text" placeholder="e.g. 2,400 sqft" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Year Built</label>
+            <input class="form-input" type="text" placeholder="e.g. 2005" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Home Condition</label>
+          <select class="form-select">
+            <option>Select Condition</option>
+            <option>Excellent — Recently updated, move-in ready</option>
+            <option>Good — Minor updates needed</option>
+            <option>Fair — Several updates or repairs needed</option>
+            <option>Needs Work — Major renovation required</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Why Are You Interested in a Valuation?</label>
+          <select class="form-select">
+            <option>Select</option>
+            <option>Considering selling soon</option>
+            <option>Just curious about value</option>
+            <option>Refinancing</option>
+            <option>Estate planning</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="divider"></div>
+        <h4 style="margin-bottom:20px;">Your Contact Information</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input class="form-input" type="text" placeholder="Jane" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input class="form-input" type="text" placeholder="Smith" required />
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input class="form-input" type="email" placeholder="jane@email.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input class="form-input" type="tel" placeholder="(555) 000-0000" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional Notes</label>
+          <textarea class="form-textarea" placeholder="Tell me anything else about your home — upgrades, special features, or your timeline…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:16px;">
+          Request My Free Valuation
+        </button>
+        <p class="form-consent" style="text-align:center;margin-top:16px;">
+          By submitting you agree to our <a href="#">Privacy Policy</a>. Your information is never shared or sold.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Why professional valuation -->
+<section class="section" style="background:var(--bg-2);">
+  <div class="container">
+    <div class="grid-2">
+      <div>
+        <span class="section-label">Why It Matters</span>
+        <h2>Why a Professional CMA Beats Online Estimates</h2>
+        <p class="mb-24">Online tools like Zillow's Zestimate can be off by tens of thousands of dollars. They rely on public records and algorithms — they've never walked through your home.</p>
+        <p>A Comparative Market Analysis from a local expert considers your home's true condition, specific upgrades, micro-location factors, and current buyer demand. It's the difference between leaving money on the table and maximizing your return.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;background:var(--bg-3);padding:24px;border-radius:var(--radius-lg);">
+          <span style="font-size:2rem;flex-shrink:0;">🎯</span>
+          <div><h4 style="margin-bottom:6px;">Hyper-Local Knowledge</h4><p style="font-size:.9rem;">I know this market street by street — and that translates directly to pricing accuracy.</p></div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;background:var(--bg-3);padding:24px;border-radius:var(--radius-lg);">
+          <span style="font-size:2rem;flex-shrink:0;">📊</span>
+          <div><h4 style="margin-bottom:6px;">Real Comparable Sales</h4><p style="font-size:.9rem;">I pull actual MLS data — closed sales, active competition, and market absorption rates.</p></div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;background:var(--bg-3);padding:24px;border-radius:var(--radius-lg);">
+          <span style="font-size:2rem;flex-shrink:0;">🏆</span>
+          <div><h4 style="margin-bottom:6px;">No Obligation, No Pressure</h4><p style="font-size:.9rem;">Your valuation comes with zero expectation. Knowledge is power — use it however you like.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <h2>Ready to Find Out What Your Home Is Worth?</h2>
+    <p>Fill out the form above or call me directly — I'm happy to chat.</p>
+    <div class="cta-actions">
+      <a href="tel:+17634478781" class="btn btn-white">Call (763) 447-8781</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+        <div class="footer-brand">
+      <img src="images/logo-bs-white.png" alt="Ben's Estates" style="height:52px;width:auto;margin-bottom:16px;" />
+      <p>Serving Minneapolis, Twin Cities, and surrounding communities with honesty, expertise, and a commitment to finding you the perfect home.</p>
+      <div class="social-links" style="margin-top:24px;">
+        <a href="https://facebook.com/bensestates" class="social-link" title="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com/bensestates" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://youtube.com/bensestates" class="social-link" title="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://tiktok.com/@bensestates" class="social-link" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.zillow.com/profile/IGBensEstates" class="social-link" title="Zillow" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0 .5 9.3l1.6 2L4 9.9V22h6.4v-6.2h3.2V22H20V9.9l1.9 1.4 1.6-2Z"/></svg></a>
+        <a href="https://linktr.ee/bensestates" class="social-link" title="Linktree" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="m13.511 5.853 4.005-4.117 2.2 2.126-4.116 4.005h5.99v3.04h-6.06l4.176 4.276-2.202 2.127-5.566-5.567-5.517 5.567-2.201-2.127 4.176-4.276H2.416v-3.04h5.99L4.29 3.862l2.2-2.126 4.006 4.117V0h3.015v5.853zM10.496 20.389v-7.836h3.015v7.836h-3.015z"/></svg></a>
+      </div>
+    </div>
+    </div>
+    <div class="footer-col"><h5>Properties</h5><ul>
+      <li><a href="properties.html">Active Listings</a></li><li><a href="sold.html">Sold Properties</a></li>
+      <li><a href="home-valuation.html">Home Valuation</a></li><li><a href="neighborhoods.html">Neighborhoods</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Resources</h5><ul>
+      <li><a href="buyers.html">Buyer's Guide</a></li><li><a href="sellers.html">Seller's Guide</a></li>
+      <li><a href="about.html">About Me</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul>
+      <li><a href="tel:+17634478781">(763) 447-8781</a></li>
+      <li><a href="mailto:BensEstates@gmail.com">BensEstates@gmail.com</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 @BensEstates All rights reserved.</span>
+    <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+  </div>
+  <div class="footer-vaura">
+    <div style="max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px 24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;">Powered by</span>
+      <img src="images/logo-vaura-white.png" alt="Vaura Digital Branding and Marketing" style="height:20px;width:auto;opacity:0.5;" />
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.35);">Vaura Digital Branding &amp; Marketing</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+</script>
+</body>
+</html>

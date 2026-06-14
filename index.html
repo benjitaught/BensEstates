@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ben's Estates | Luxury Homes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header transparent" id="header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo-bs-white.png" alt="Ben's Estates" class="logo-img" style="height:44px;width:auto;" /></a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <a href="properties.html">Properties</a>
+        <div class="dropdown-menu">
+          <a href="properties.html">Active Listings</a>
+          <a href="sold.html">Sold Properties</a>
+        </div>
+      </div>
+      <a href="neighborhoods.html">Neighborhoods</a>
+      <a href="home-valuation.html">Home Valuation</a>
+      <a href="buyers.html">Buyers</a>
+      <a href="sellers.html">Sellers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="tel:+17634478781" class="nav-phone">(763) 447-8781</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get In Touch</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="properties.html">Active Listings</a>
+  <a href="sold.html">Sold Properties</a>
+  <a href="neighborhoods.html">Neighborhoods</a>
+  <a href="home-valuation.html">Home Valuation</a>
+  <a href="buyers.html">Buyers Guide</a>
+  <a href="sellers.html">Sellers Guide</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:+17634478781" style="color:var(--color-accent);font-weight:700;">(763) 447-8781</a>
+  <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=80');"></div>
+  <div class="hero-content">
+    <div class="hero-badges">
+      <span class="hero-badge">✦ Certified Luxury Home Specialist</span>
+      <span class="hero-badge">✦ CNE Certified Negotiations Expert</span>
+    </div>
+    <h1>Find Your<br /><em>Dream Home</em></h1>
+    <p>Trusted expertise. Unmatched service. Your perfect home is closer than you think.</p>
+    <div class="hero-actions">
+      <a href="properties.html" class="btn btn-primary">View Listings</a>
+      <a href="home-valuation.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.6);color:white;">What's My Home Worth?</a>
+    </div>
+
+    <div class="hero-search">
+      <h4>Search Properties</h4>
+      <div class="search-row">
+        <input class="search-field" type="text" placeholder="City, ZIP, or Address…" />
+        <select class="search-select">
+          <option>Property Type</option>
+          <option>Single Family</option>
+          <option>Condo / Townhome</option>
+          <option>Land</option>
+          <option>Multi-Family</option>
+        </select>
+        <select class="search-select">
+          <option>Price Range</option>
+          <option>Under $300K</option>
+          <option>$300K – $600K</option>
+          <option>$600K – $1M</option>
+          <option>$1M+</option>
+        </select>
+        <a href="properties.html" class="btn btn-primary">Search</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Client Satisfaction</span></div>
+    <div class="stat-item"><span class="stat-num">6+</span><span class="stat-label">Years Experience</span></div>
+    <div class="stat-item"><span class="stat-num">CNE</span><span class="stat-label">Certified Negotiations Expert</span></div>
+    <div class="stat-item"><span class="stat-num">CLHMS</span><span class="stat-label">Luxury Home Marketing Specialist</span></div>
+  </div>
+</div>
+
+<!-- ── FEATURED LISTINGS CAROUSEL ── -->
+<section class="section" style="overflow:hidden;">
+  <div class="container">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:16px;">
+      <div>
+        <span class="section-label">Portfolio</span>
+        <h2>Featured Properties</h2>
+      </div>
+      <div class="carousel-controls-desktop">
+        <button class="carousel-btn" id="prevBtn" onclick="moveCarousel(-1)" aria-label="Previous">&#8592;</button>
+        <button class="carousel-btn" id="nextBtn" onclick="moveCarousel(1)" aria-label="Next">&#8594;</button>
+        <a href="properties.html" class="btn btn-outline" style="margin-left:8px;">View All</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carousel track — bleeds past container edges -->
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="carouselTrack">
+
+      <div class="listing-card carousel-slide">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=70" alt="Luxury Home" loading="lazy" />
+          <span class="listing-badge sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$1,250,000</div>
+          <div class="listing-address">1842 Magnolia Drive</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>4</strong> Beds</span>
+            <span class="listing-spec"><strong>3.5</strong> Baths</span>
+            <span class="listing-spec"><strong>3,840</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card carousel-slide">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=70" alt="Luxury Home" loading="lazy" />
+          <span class="listing-badge sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$875,000</div>
+          <div class="listing-address">524 Whispering Pines Ct</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>4</strong> Beds</span>
+            <span class="listing-spec"><strong>3</strong> Baths</span>
+            <span class="listing-spec"><strong>2,960</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card carousel-slide">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=70" alt="Luxury Home" loading="lazy" />
+          <span class="listing-badge sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$649,900</div>
+          <div class="listing-address">37 Oakbrook Lane</div>
+          <div class="listing-city">Edina, MN 55435</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>3</strong> Beds</span>
+            <span class="listing-spec"><strong>2</strong> Baths</span>
+            <span class="listing-spec"><strong>2,150</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card carousel-slide">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=70" alt="Luxury Home" loading="lazy" />
+          <span class="listing-badge sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$529,000</div>
+          <div class="listing-address">88 Clearwater Blvd</div>
+          <div class="listing-city">Wayzata, MN 55391</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>3</strong> Beds</span>
+            <span class="listing-spec"><strong>2</strong> Baths</span>
+            <span class="listing-spec"><strong>1,920</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card carousel-slide">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=70" alt="Luxury Home" loading="lazy" />
+          <span class="listing-badge sold">Sold</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$995,000</div>
+          <div class="listing-address">3308 Heritage Oaks Dr</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>5</strong> Beds</span>
+            <span class="listing-spec"><strong>4</strong> Baths</span>
+            <span class="listing-spec"><strong>4,100</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile controls (arrows + View All) -->
+  <div class="carousel-controls-mobile">
+    <button class="carousel-btn" onclick="moveCarousel(-1)" aria-label="Previous">&#8592;</button>
+    <button class="carousel-btn" onclick="moveCarousel(1)" aria-label="Next">&#8594;</button>
+    <a href="properties.html" class="btn btn-outline">View All</a>
+  </div>
+</section>
+
+<!-- ── ABOUT SNIPPET ── -->
+<section class="section" style="background:white;padding-top:0;">
+  <div class="container">
+    <div class="grid-2">
+      <div class="about-image-wrap" style="padding-bottom:48px;">
+        <img src="images/ben-headshot.jpg" alt="Benjamin Smith" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;" />
+        <div class="about-accent-box">
+          <span class="big-num">#1</span>
+          <span>In Your Market</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-label" style="color:#1a1a1a;">About Me</span>
+        <h2 style="color:#0a0a0a;">Your Trusted Real Estate Expert</h2>
+        <p>With over a decade of experience in the Minneapolis &amp; Twin Cities area, I've built my reputation on honesty, dedication, and delivering results that exceed expectations. Whether you're buying your first home or selling a luxury estate, I bring the same level of care and commitment to every transaction.</p>
+        <p>My approach combines deep market knowledge with personalized service — ensuring you feel confident and supported every step of the way.</p>
+        <div class="about-creds">
+          <div class="cred-item"><span class="cred-icon">🏆</span> Ranked #1 in Minneapolis Area REALTORS®</div>
+          <div class="cred-item"><span class="cred-icon">🎓</span> Certified Luxury Home Marketing Specialist</div>
+          <div class="cred-item"><span class="cred-icon">🏡</span> 200+ Families Successfully Served</div>
+          <div class="cred-item"><span class="cred-icon">⭐</span> 5-Star Rated on Google, Zillow & Realtor.com</div>
+        </div>
+        <a href="about.html" class="btn btn-primary">Learn More About Me</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="section">
+  <div class="container">
+    <div class="section-center mb-48">
+      <span class="section-label">What I Offer</span>
+      <h2>Full-Service Real Estate</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Buying a Home</h3>
+        <p>From pre-approval to closing day, I guide you through every step of the buying process — so you get the right home at the right price.</p>
+        <a href="buyers.html" class="btn btn-outline">Buyer's Guide →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💰</div>
+        <h3>Selling Your Home</h3>
+        <p>Strategic marketing, professional photography, and expert negotiation to get your home sold fast — for the most money possible.</p>
+        <a href="sellers.html" class="btn btn-outline">Seller's Guide →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Home Valuation</h3>
+        <p>Curious what your home is worth in today's market? Get a free, no-obligation comparative market analysis in minutes.</p>
+        <a href="home-valuation.html" class="btn btn-outline">Get My Value →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NEIGHBORHOODS ── -->
+<section class="section" style="background:var(--bg-2);">
+  <div class="container">
+    <div class="section-center mb-48">
+      <span class="section-label">Explore</span>
+      <h2>Featured Neighborhoods</h2>
+      <p style="max-width:480px;margin:12px auto 0;">Discover the communities that make Minneapolis &amp; Twin Cities a great place to call home.</p>
+    </div>
+    <div class="grid-3">
+      <a href="neighborhoods.html" class="neighborhood-card">
+        <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=70" alt="Neighborhood" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" />
+        <div class="nbhd-bg"></div>
+        <div class="nbhd-content">
+          <h3>Downtown District</h3>
+          <p>Urban living at its finest</p>
+          <span class="nbhd-tag">Walkable</span><span class="nbhd-tag">Dining</span>
+        </div>
+      </a>
+      <a href="neighborhoods.html" class="neighborhood-card">
+        <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=70" alt="Neighborhood" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" />
+        <div class="nbhd-bg"></div>
+        <div class="nbhd-content">
+          <h3>Lakeside Estates</h3>
+          <p>Serene waterfront living</p>
+          <span class="nbhd-tag">Waterfront</span><span class="nbhd-tag">Luxury</span>
+        </div>
+      </a>
+      <a href="neighborhoods.html" class="neighborhood-card">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=70" alt="Neighborhood" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" />
+        <div class="nbhd-bg"></div>
+        <div class="nbhd-content">
+          <h3>Maple Grove</h3>
+          <p>Top-rated schools, family-friendly</p>
+          <span class="nbhd-tag">Top Schools</span><span class="nbhd-tag">Parks</span>
+        </div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="neighborhoods.html" class="btn btn-outline">Explore All Neighborhoods</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-center">
+      <span class="section-label">Client Love</span>
+      <h2>What My Clients Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Working with Benjamin Smith was an absolute dream. She found us our perfect home in under three weeks and negotiated $40K below asking. We couldn't be happier!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SJ</div>
+          <div>
+            <div class="author-name">Sarah & James T.</div>
+            <div class="author-detail">First-time Buyers</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Sold our home in 6 days for over asking price. Benjamin Smith's marketing strategy and staging advice made all the difference. Truly a top-tier professional."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div>
+            <div class="author-name">Michael R.</div>
+            <div class="author-detail">Home Seller</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"I've bought and sold four homes and this was by far the best experience. Responsive, knowledgeable, and genuinely cares about her clients. Highly recommend!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">LP</div>
+          <div>
+            <div class="author-name">Linda P.</div>
+            <div class="author-detail">Repeat Client</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="about.html#reviews" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;">Read More Reviews</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Ready to Make Your Move?</h2>
+    <p>Let's talk about your real estate goals. I'm here to help — no pressure, just honest advice.</p>
+    <div class="cta-actions">
+      <a href="contact.html" class="btn btn-white">Schedule a Consultation</a>
+      <a href="home-valuation.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.5);color:white;">Get a Free Home Valuation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── NEWSLETTER ── -->
+<section class="section newsletter-section">
+  <div class="container section-center">
+    <span class="section-label">Stay Informed</span>
+    <h2>Market Updates & New Listings</h2>
+    <p style="max-width:440px;margin:12px auto 0;">Get the latest listings and market insights delivered straight to your inbox — no spam, ever.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input type="email" placeholder="Your email address…" />
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+    <p class="form-consent" style="margin-top:16px;">By subscribing you agree to our <a href="#">Privacy Policy</a>. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+        <div class="footer-brand">
+      <img src="images/logo-bs-white.png" alt="Ben's Estates" style="height:52px;width:auto;margin-bottom:16px;" />
+      <p>Serving Minneapolis, Twin Cities, and surrounding communities with honesty, expertise, and a commitment to finding you the perfect home.</p>
+      <div class="social-links" style="margin-top:24px;">
+        <a href="https://facebook.com/bensestates" class="social-link" title="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com/bensestates" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://youtube.com/bensestates" class="social-link" title="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://tiktok.com/@bensestates" class="social-link" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.zillow.com/profile/IGBensEstates" class="social-link" title="Zillow" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0 .5 9.3l1.6 2L4 9.9V22h6.4v-6.2h3.2V22H20V9.9l1.9 1.4 1.6-2Z"/></svg></a>
+        <a href="https://linktr.ee/bensestates" class="social-link" title="Linktree" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="m13.511 5.853 4.005-4.117 2.2 2.126-4.116 4.005h5.99v3.04h-6.06l4.176 4.276-2.202 2.127-5.566-5.567-5.517 5.567-2.201-2.127 4.176-4.276H2.416v-3.04h5.99L4.29 3.862l2.2-2.126 4.006 4.117V0h3.015v5.853zM10.496 20.389v-7.836h3.015v7.836h-3.015z"/></svg></a>
+      </div>
+    </div>
+    </div>
+    <div class="footer-col">
+      <h5>Properties</h5>
+      <ul>
+        <li><a href="properties.html">Active Listings</a></li>
+        <li><a href="sold.html">Sold Properties</a></li>
+        <li><a href="home-valuation.html">Home Valuation</a></li>
+        <li><a href="neighborhoods.html">Neighborhoods</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Resources</h5>
+      <ul>
+        <li><a href="buyers.html">Buyer's Guide</a></li>
+        <li><a href="sellers.html">Seller's Guide</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="tel:+17634478781">(763) 447-8781</a></li>
+        <li><a href="mailto:BensEstates@gmail.com">BensEstates@gmail.com</a></li>
+        <li style="color:rgba(255,255,255,0.4);font-size:.875rem;margin-top:8px;">7301 Ohms Lane, Suite #300<br/>Minneapolis, MN 55439</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 @BensEstates All rights reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Accessibility</a>
+    </div>
+  </div>
+  <div class="footer-vaura">
+    <div style="max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px 24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;">Powered by</span>
+      <img src="images/logo-vaura-white.png" alt="Vaura Digital Branding and Marketing" style="height:20px;width:auto;opacity:0.5;" />
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.35);">Vaura Digital Branding &amp; Marketing</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll behavior
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+    header.classList.toggle('transparent', window.scrollY <= 60);
+  });
+
+  // Mobile nav
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.add('open');
+  });
+  document.getElementById('mobileClose').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.remove('open');
+  });
+
+  // ── Carousel ──
+  const track = document.getElementById('carouselTrack');
+  const slides = track.querySelectorAll('.carousel-slide');
+  let current = 0;
+
+  function slidesVisible() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function maxIndex() { return slides.length - slidesVisible(); }
+
+  function updateButtons() {
+    document.querySelectorAll('#prevBtn, .carousel-controls-mobile .carousel-btn:first-child').forEach(b => b.disabled = current === 0);
+    document.querySelectorAll('#nextBtn, .carousel-controls-mobile .carousel-btn:last-of-type').forEach(b => b.disabled = current >= maxIndex());
+  }
+
+  function goTo(index) {
+    current = Math.max(0, Math.min(index, maxIndex()));
+    const slideWidth = slides[0].offsetWidth + 20; // gap
+    track.style.transform = `translateX(-${current * slideWidth}px)`;
+    updateButtons();
+  }
+
+  window.moveCarousel = (dir) => goTo(current + dir);
+
+  // Drag to scroll
+  let startX = 0, isDragging = false;
+  track.addEventListener('mousedown', e => { isDragging = true; startX = e.pageX; track.style.transition = 'none'; });
+  window.addEventListener('mouseup', e => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = '';
+    const diff = e.pageX - startX;
+    if (Math.abs(diff) > 60) goTo(current + (diff < 0 ? 1 : -1));
+    else goTo(current);
+  });
+
+  window.addEventListener('resize', () => goTo(Math.min(current, maxIndex())));
+  updateButtons();
+</script>
+</body>
+</html>

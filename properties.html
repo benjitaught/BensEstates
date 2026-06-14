@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Active Listings | Ben's Estates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+
+<header class="site-header solid" id="header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo-bs-white.png" alt="Ben's Estates" class="logo-img" style="height:44px;width:auto;" /></a>
+    <nav class="nav-links">
+      <div class="nav-dropdown">
+        <a href="properties.html" class="active">Properties</a>
+        <div class="dropdown-menu">
+          <a href="properties.html">Active Listings</a>
+          <a href="sold.html">Sold Properties</a>
+        </div>
+      </div>
+      <a href="neighborhoods.html">Neighborhoods</a>
+      <a href="home-valuation.html">Home Valuation</a>
+      <a href="buyers.html">Buyers</a>
+      <a href="sellers.html">Sellers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="tel:+17634478781" class="nav-phone">(763) 447-8781</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get In Touch</a>
+    </div>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="properties.html">Active Listings</a>
+  <a href="sold.html">Sold Properties</a>
+  <a href="neighborhoods.html">Neighborhoods</a>
+  <a href="home-valuation.html">Home Valuation</a>
+  <a href="buyers.html">Buyers Guide</a>
+  <a href="sellers.html">Sellers Guide</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:+17634478781" style="color:var(--color-accent);font-weight:700;">(763) 447-8781</a>
+  <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+</div>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> › Properties</div>
+  <h1>Active Listings</h1>
+  <p>Explore available homes in Minneapolis &amp; Twin Cities and surrounding communities.</p>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <input type="text" placeholder="Search by city, zip, or address…" style="flex:2;" />
+      <select>
+        <option>Property Type</option>
+        <option>Single Family</option>
+        <option>Condo / Townhome</option>
+        <option>Land</option>
+        <option>Multi-Family</option>
+      </select>
+      <select>
+        <option>Min Price</option>
+        <option>$100,000</option>
+        <option>$250,000</option>
+        <option>$500,000</option>
+        <option>$750,000</option>
+        <option>$1,000,000</option>
+      </select>
+      <select>
+        <option>Max Price</option>
+        <option>$300,000</option>
+        <option>$500,000</option>
+        <option>$750,000</option>
+        <option>$1,000,000</option>
+        <option>$2,000,000+</option>
+      </select>
+      <select>
+        <option>Beds</option>
+        <option>1+</option>
+        <option>2+</option>
+        <option>3+</option>
+        <option>4+</option>
+      </select>
+      <button class="btn btn-primary">Filter</button>
+    </div>
+
+    <p style="margin-bottom:32px;font-size:.875rem;"><strong style="color:var(--color-text);">12 Properties</strong> found</p>
+
+    <div class="grid-3">
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$1,250,000</div>
+          <div class="listing-address">1842 Magnolia Drive</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>4</strong> Beds</span>
+            <span class="listing-spec"><strong>3.5</strong> Baths</span>
+            <span class="listing-spec"><strong>3,840</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$875,000</div>
+          <div class="listing-address">524 Whispering Pines Ct</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>4</strong> Beds</span>
+            <span class="listing-spec"><strong>3</strong> Baths</span>
+            <span class="listing-spec"><strong>2,960</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$649,900</div>
+          <div class="listing-address">37 Oakbrook Lane</div>
+          <div class="listing-city">Edina, MN 55435</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>3</strong> Beds</span>
+            <span class="listing-spec"><strong>2</strong> Baths</span>
+            <span class="listing-spec"><strong>2,150</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$529,000</div>
+          <div class="listing-address">88 Clearwater Blvd</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>3</strong> Beds</span>
+            <span class="listing-spec"><strong>2</strong> Baths</span>
+            <span class="listing-spec"><strong>1,920</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Coming Soon</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$1,795,000</div>
+          <div class="listing-address">2201 Lakeview Terrace</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>5</strong> Beds</span>
+            <span class="listing-spec"><strong>4</strong> Baths</span>
+            <span class="listing-spec"><strong>5,200</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$389,000</div>
+          <div class="listing-address">415 Birchwood Circle</div>
+          <div class="listing-city">Edina, MN 55435</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>3</strong> Beds</span>
+            <span class="listing-spec"><strong>2</strong> Baths</span>
+            <span class="listing-spec"><strong>1,680</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$725,000</div>
+          <div class="listing-address">910 Summit Ridge Rd</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>4</strong> Beds</span>
+            <span class="listing-spec"><strong>3</strong> Baths</span>
+            <span class="listing-spec"><strong>2,640</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$449,500</div>
+          <div class="listing-address">7 Elm Grove Way</div>
+          <div class="listing-city">Wayzata, MN 55391</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>3</strong> Beds</span>
+            <span class="listing-spec"><strong>2.5</strong> Baths</span>
+            <span class="listing-spec"><strong>1,850</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=70" alt="Home" loading="lazy" />
+          <span class="listing-badge">Active</span>
+        </div>
+        <div class="listing-body">
+          <div class="listing-price">$995,000</div>
+          <div class="listing-address">3308 Heritage Oaks Dr</div>
+          <div class="listing-city">Minneapolis, MN 55439</div>
+          <div class="listing-specs">
+            <span class="listing-spec"><strong>5</strong> Beds</span>
+            <span class="listing-spec"><strong>4</strong> Baths</span>
+            <span class="listing-spec"><strong>4,100</strong> sqft</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:56px;">
+      <button class="btn btn-primary" style="min-width:44px;padding:10px 16px;">1</button>
+      <button class="btn btn-outline" style="min-width:44px;padding:10px 16px;">2</button>
+      <button class="btn btn-outline" style="min-width:44px;padding:10px 16px;">›</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Don't See What You're Looking For?</h2>
+    <p>I have access to off-market properties and can set up custom alerts for you.</p>
+    <div class="cta-actions">
+      <a href="contact.html" class="btn btn-white">Contact Me</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+        <div class="footer-brand">
+      <img src="images/logo-bs-white.png" alt="Ben's Estates" style="height:52px;width:auto;margin-bottom:16px;" />
+      <p>Serving Minneapolis, Twin Cities, and surrounding communities with honesty, expertise, and a commitment to finding you the perfect home.</p>
+      <div class="social-links" style="margin-top:24px;">
+        <a href="https://facebook.com/bensestates" class="social-link" title="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com/bensestates" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://youtube.com/bensestates" class="social-link" title="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://tiktok.com/@bensestates" class="social-link" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.zillow.com/profile/IGBensEstates" class="social-link" title="Zillow" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0 .5 9.3l1.6 2L4 9.9V22h6.4v-6.2h3.2V22H20V9.9l1.9 1.4 1.6-2Z"/></svg></a>
+        <a href="https://linktr.ee/bensestates" class="social-link" title="Linktree" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="m13.511 5.853 4.005-4.117 2.2 2.126-4.116 4.005h5.99v3.04h-6.06l4.176 4.276-2.202 2.127-5.566-5.567-5.517 5.567-2.201-2.127 4.176-4.276H2.416v-3.04h5.99L4.29 3.862l2.2-2.126 4.006 4.117V0h3.015v5.853zM10.496 20.389v-7.836h3.015v7.836h-3.015z"/></svg></a>
+      </div>
+    </div>
+    </div>
+    <div class="footer-col"><h5>Properties</h5><ul>
+      <li><a href="properties.html">Active Listings</a></li>
+      <li><a href="sold.html">Sold Properties</a></li>
+      <li><a href="home-valuation.html">Home Valuation</a></li>
+      <li><a href="neighborhoods.html">Neighborhoods</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Resources</h5><ul>
+      <li><a href="buyers.html">Buyer's Guide</a></li>
+      <li><a href="sellers.html">Seller's Guide</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Contact</h5><ul>
+      <li><a href="tel:+17634478781">(763) 447-8781</a></li>
+      <li><a href="mailto:BensEstates@gmail.com">BensEstates@gmail.com</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 @BensEstates All rights reserved.</span>
+    <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+  </div>
+  <div class="footer-vaura">
+    <div style="max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px 24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;">Powered by</span>
+      <img src="images/logo-vaura-white.png" alt="Vaura Digital Branding and Marketing" style="height:20px;width:auto;opacity:0.5;" />
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.35);">Vaura Digital Branding &amp; Marketing</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+</script>
+</body>
+</html>
