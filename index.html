@@ -389,10 +389,11 @@
     <span class="section-label">Stay Informed</span>
     <h2>Market Updates & New Listings</h2>
     <p style="max-width:440px;margin:12px auto 0;">Get the latest listings and market insights delivered straight to your inbox — no spam, ever.</p>
-    <form class="newsletter-form" onsubmit="return false;">
-      <input type="email" placeholder="Your email address…" />
+    <form class="newsletter-form" id="newsletterForm" onsubmit="submitNewsletter(event);">
+      <input type="email" id="newsletterEmail" placeholder="Your email address…" required />
       <button type="submit" class="btn btn-primary">Subscribe</button>
     </form>
+    <p id="newsletterSuccess" style="display:none;color:var(--color-accent);font-weight:600;margin-top:16px;">You're in! Thanks for subscribing.</p>
     <p class="form-consent" style="margin-top:16px;">By subscribing you agree to our <a href="#">Privacy Policy</a>. Unsubscribe anytime.</p>
   </div>
 </section>
@@ -482,6 +483,17 @@
   const navToggle = document.getElementById('navToggle');
   const mobileNav = document.getElementById('mobileNav');
   navToggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); });
+
+  function submitNewsletter(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdvZevs0HNsiVY9SQMsB4AoQC4JGMIN4W4_CIUujMOwC1kvLg/formResponse';
+    const data = new FormData();
+    data.append('entry.1629867562', email);
+    fetch(formUrl, { method: 'POST', body: data, mode: 'no-cors' });
+    document.getElementById('newsletterForm').style.display = 'none';
+    document.getElementById('newsletterSuccess').style.display = 'block';
+  }
 
   // ── Carousel ──
   const track = document.getElementById('carouselTrack');
