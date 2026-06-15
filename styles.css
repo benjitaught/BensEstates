@@ -822,10 +822,10 @@ em { font-style: italic; color: var(--color-accent); }
   color: var(--text-muted);
   border-top: 1px solid rgba(255,255,255,0.06);
 }
-.footer-vaura-inline { display: flex; align-items: center; gap: 10px; }
-.footer-vaura-inline img { height: 28px !important; width: auto; opacity: 0.5; vertical-align: middle; }
-.footer-vaura-inline span { font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
-.footer-vaura-inline .powered-label { text-transform: uppercase; letter-spacing: 0.08em; }
+.footer-vaura-inline { display: flex; align-items: center; gap: 8px; }
+.footer-vaura-inline img { height: 14px !important; width: auto; opacity: 0.5; vertical-align: middle; }
+.footer-vaura-inline span { font-size: 0.75rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+.footer-vaura-inline .powered-label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; }
 
 /* ── Neighborhood carousel slide sizing ── */
 .nbhd-slide {
