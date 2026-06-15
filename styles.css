@@ -905,41 +905,8 @@ em { font-style: italic; color: var(--color-accent); }
   .nbhd-full-body { padding: 36px 28px; }
   .services-grid { background: none; gap: 1px; }
 
-  /* ── Values carousel (mobile) ── */
-  .values-desktop { display: none !important; }
-  .values-mobile { display: block; }
-  .values-carousel-wrap {
-    position: relative;
-    overflow: hidden;
-  }
-  .values-carousel-fade {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 72px;
-    pointer-events: none;
-    z-index: 2;
-  }
-  .values-carousel-fade--left {
-    left: 0;
-    background: linear-gradient(to right, #0f0f0f 20%, transparent 100%);
-  }
-  .values-carousel-fade--right {
-    right: 0;
-    background: linear-gradient(to left, #0f0f0f 20%, transparent 100%);
-  }
-  .values-carousel { overflow: hidden; }
-  .values-carousel-track {
-    display: flex;
-    gap: 16px;
-    will-change: transform;
-  }
-  .values-slide {
-    flex-shrink: 0;
-    width: 72vw;
-    max-width: 280px;
-    padding: 32px 28px;
-  }
-  .values-slide h3 { font-size: 1.15rem; }
+  /* ── Values reel (mobile overrides) ── */
+  .values-reel-card { width: 68vw; max-width: 240px; }
 
   /* ── Testimonials iOS glass (mobile) ── */
   .testimonials-grid {
@@ -965,8 +932,45 @@ em { font-style: italic; color: var(--color-accent); }
   }
 }
 
-/* ── Values mobile hidden by default (desktop shows grid) ── */
-.values-mobile { display: none; }
+/* ── Values reel (all screen sizes) ── */
+.values-reel-wrap {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -24px;
+}
+.values-reel-fade--left,
+.values-reel-fade--right {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 140px;
+  pointer-events: none;
+  z-index: 2;
+}
+.values-reel-fade--left  { left:  0; background: linear-gradient(to right, var(--bg-1) 10%, transparent 100%); }
+.values-reel-fade--right { right: 0; background: linear-gradient(to left,  var(--bg-1) 10%, transparent 100%); }
+.values-reel {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: valuesScroll 28s linear infinite;
+  will-change: transform;
+}
+.values-reel:hover { animation-play-state: paused; }
+@keyframes valuesScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.values-reel-card {
+  flex-shrink: 0;
+  width: 240px;
+  background: var(--bg-2);
+  border-top: 1px solid transparent;
+  padding: 36px 32px;
+  transition: border-top-color 0.3s ease;
+}
+.values-reel-card:hover { border-top-color: var(--color-accent); }
+.values-reel-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+.values-reel-card p  { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7; }
 
 /* ── Logo swap ── */
 .logo-img { filter: brightness(0) invert(1); }
