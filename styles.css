@@ -910,15 +910,33 @@ em { font-style: italic; color: var(--color-accent); }
   /* ── Values reel (mobile overrides) ── */
   .values-reel-card { width: 68vw; max-width: 240px; }
 
-  /* ── Testimonials — single-card glass carousel (mobile) ── */
+  /* ── Testimonials — sliding glass carousel (mobile) ── */
   .testimonials-grid {
     display: block;
     background: transparent;
     margin-top: 28px;
     position: relative;
+    overflow: hidden;
   }
-  .testimonial-card {
-    display: none;
+  .testimonials-grid::before,
+  .testimonials-grid::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 64px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .testimonials-grid::before { left:  0; background: linear-gradient(to right, var(--bg-1) 10%, transparent 100%); }
+  .testimonials-grid::after  { right: 0; background: linear-gradient(to left,  var(--bg-1) 10%, transparent 100%); }
+  .tc-track {
+    display: flex;
+    transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .tc-track .testimonial-card {
+    flex-shrink: 0;
+    width: 100%;
     background: rgba(255,255,255,0.055);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
@@ -926,16 +944,6 @@ em { font-style: italic; color: var(--color-accent); }
     border-radius: 22px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
     padding: 28px 24px;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-  .testimonial-card.tc-active {
-    display: block;
-    opacity: 1;
-  }
-  .testimonial-card.tc-fade {
-    display: block;
-    opacity: 0;
   }
   .testimonials-review-cta { text-align: center; margin-top: 24px; }
 }

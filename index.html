@@ -462,23 +462,21 @@
   });
 
   // Mobile nav
-  // Testimonials — single-card fade carousel (mobile only)
+  // Testimonials — sliding carousel (mobile only)
   (function() {
     if (window.innerWidth > 768) return;
-    const grids = document.querySelectorAll('.testimonials-grid');
-    grids.forEach(function(grid) {
+    document.querySelectorAll('.testimonials-grid').forEach(function(grid) {
       const cards = Array.from(grid.querySelectorAll('.testimonial-card'));
       if (!cards.length) return;
+      const track = document.createElement('div');
+      track.className = 'tc-track';
+      cards.forEach(function(c) { track.appendChild(c); });
+      grid.prepend(track);
       let current = 0;
-      cards[0].classList.add('tc-active');
+      const total = cards.length;
       setInterval(function() {
-        const prev = current;
-        current = (current + 1) % cards.length;
-        cards[prev].classList.replace('tc-active', 'tc-fade');
-        setTimeout(function() {
-          cards[prev].classList.remove('tc-fade');
-          cards[current].classList.add('tc-active');
-        }, 620);
+        current = (current + 1) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
       }, 3000);
     });
   })();
