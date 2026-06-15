@@ -918,17 +918,6 @@ em { font-style: italic; color: var(--color-accent); }
     position: relative;
     overflow: hidden;
   }
-  .testimonials-grid::before,
-  .testimonials-grid::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 28px;
-    pointer-events: none;
-    z-index: 2;
-  }
-  .testimonials-grid::before { left:  0; background: linear-gradient(to right, var(--bg-1) 0%, transparent 100%); }
-  .testimonials-grid::after  { right: 0; background: linear-gradient(to left,  var(--bg-1) 0%, transparent 100%); }
   .tc-track {
     display: flex;
     transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
