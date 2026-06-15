@@ -820,10 +820,12 @@ em { font-style: italic; color: var(--color-accent); }
   padding: 24px 0;
   font-size: 0.75rem;
   color: var(--text-muted);
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
-.footer-bottom-links { display: flex; gap: 28px; }
-.footer-bottom-links a { color: var(--text-muted); }
-.footer-bottom-links a:hover { color: var(--color-accent); }
+.footer-vaura-inline { display: flex; align-items: center; gap: 10px; }
+.footer-vaura-inline img { height: 28px !important; width: auto; opacity: 0.5; vertical-align: middle; }
+.footer-vaura-inline span { font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
+.footer-vaura-inline .powered-label { text-transform: uppercase; letter-spacing: 0.08em; }
 
 /* ── Neighborhood carousel slide sizing ── */
 .nbhd-slide {
@@ -947,6 +949,7 @@ em { font-style: italic; color: var(--color-accent); }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-vaura-inline { justify-content: center; }
   .newsletter-form { flex-direction: column; }
   .hero-search { padding: 24px; margin-bottom: 48px; }
   .filter-bar { flex-direction: column; }
