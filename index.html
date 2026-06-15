@@ -287,15 +287,18 @@
 </section>
 
 <!-- ── NEIGHBORHOODS ── -->
-<section class="section" style="background:var(--bg-2);">
+<section class="section nbhd-carousel-section" style="background:var(--bg-2);overflow:hidden;">
   <div class="container">
     <div class="section-center mb-48">
       <span class="section-label">Explore</span>
       <h2>Featured Neighborhoods</h2>
       <p style="max-width:480px;margin:12px auto 0;">Discover the communities that make Minneapolis &amp; Twin Cities a great place to call home.</p>
     </div>
-    <div class="grid-3">
-      <a href="neighborhoods.html" class="neighborhood-card">
+  </div>
+
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="nbhdTrack">
+      <a href="neighborhoods.html" class="neighborhood-card carousel-slide nbhd-slide">
         <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&q=70" alt="Neighborhood" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" />
         <div class="nbhd-bg"></div>
         <div class="nbhd-content">
@@ -304,7 +307,7 @@
           <span class="nbhd-tag">Walkable</span><span class="nbhd-tag">Dining</span>
         </div>
       </a>
-      <a href="neighborhoods.html" class="neighborhood-card">
+      <a href="neighborhoods.html" class="neighborhood-card carousel-slide nbhd-slide">
         <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=600&q=70" alt="Neighborhood" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" />
         <div class="nbhd-bg"></div>
         <div class="nbhd-content">
@@ -313,7 +316,7 @@
           <span class="nbhd-tag">Waterfront</span><span class="nbhd-tag">Luxury</span>
         </div>
       </a>
-      <a href="neighborhoods.html" class="neighborhood-card">
+      <a href="neighborhoods.html" class="neighborhood-card carousel-slide nbhd-slide">
         <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=70" alt="Neighborhood" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" />
         <div class="nbhd-bg"></div>
         <div class="nbhd-content">
@@ -323,9 +326,15 @@
         </div>
       </a>
     </div>
-    <div style="text-align:center;margin-top:40px;">
-      <a href="neighborhoods.html" class="btn btn-outline">Explore All Neighborhoods</a>
-    </div>
+  </div>
+
+  <div class="carousel-controls-mobile" style="margin-top:24px;">
+    <button class="carousel-btn" id="nbhdPrev" aria-label="Previous">&#8592;</button>
+    <button class="carousel-btn" id="nbhdNext" aria-label="Next">&#8594;</button>
+  </div>
+
+  <div style="text-align:center;margin-top:32px;">
+    <a href="neighborhoods.html" class="btn btn-outline">Explore All Neighborhoods</a>
   </div>
 </section>
 
@@ -561,6 +570,32 @@
   document.getElementById('svcNextMob').addEventListener('click', () => svcGoTo(svcCurrent + 1));
   window.addEventListener('resize', () => svcGoTo(Math.min(svcCurrent, svcMaxIndex())));
   svcGoTo(0);
+
+  // ── Neighborhoods carousel ──
+  const nbhdTrack = document.getElementById('nbhdTrack');
+  const nbhdSlides = nbhdTrack.querySelectorAll('.nbhd-slide');
+  let nbhdCurrent = 0;
+
+  function nbhdVisible() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function nbhdMaxIndex() { return Math.max(0, nbhdSlides.length - nbhdVisible()); }
+
+  function nbhdGoTo(index) {
+    nbhdCurrent = Math.max(0, Math.min(index, nbhdMaxIndex()));
+    const w = nbhdSlides[0].offsetWidth + 20;
+    nbhdTrack.style.transform = `translateX(-${nbhdCurrent * w}px)`;
+    document.getElementById('nbhdPrev').disabled = nbhdCurrent === 0;
+    document.getElementById('nbhdNext').disabled = nbhdCurrent >= nbhdMaxIndex();
+  }
+
+  document.getElementById('nbhdPrev').addEventListener('click', () => nbhdGoTo(nbhdCurrent - 1));
+  document.getElementById('nbhdNext').addEventListener('click', () => nbhdGoTo(nbhdCurrent + 1));
+  window.addEventListener('resize', () => nbhdGoTo(Math.min(nbhdCurrent, nbhdMaxIndex())));
+  nbhdGoTo(0);
 </script>
 </body>
 </html>

@@ -825,6 +825,19 @@ em { font-style: italic; color: var(--color-accent); }
 .footer-bottom-links a { color: var(--text-muted); }
 .footer-bottom-links a:hover { color: var(--color-accent); }
 
+/* ── Neighborhood carousel slide sizing ── */
+.nbhd-slide {
+  flex-shrink: 0;
+  width: calc(33.333% - 14px);
+  aspect-ratio: 3/4;
+}
+@media (max-width: 1024px) {
+  .nbhd-slide { width: calc(50% - 10px); }
+}
+@media (max-width: 768px) {
+  .nbhd-slide { width: 80vw; max-width: 320px; }
+}
+
 /* ── Vaura credit ── */
 .footer-vaura { background: var(--bg-0); }
 .footer-vaura img { vertical-align: middle; height: 40px !important; }
