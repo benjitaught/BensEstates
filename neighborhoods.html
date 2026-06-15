@@ -10,39 +10,63 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
-    .nbhd-full-card {
+    .nbhd-group { margin-bottom: 64px; }
+    .nbhd-group-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 8px;
+    }
+    .nbhd-group-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nbhd-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .nbhd-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: var(--shadow);
-      margin-bottom: 32px;
-      background: white;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
-    .nbhd-full-card.reverse { direction: rtl; }
-    .nbhd-full-card.reverse > * { direction: ltr; }
-    .nbhd-full-img { aspect-ratio: 4/3; overflow: hidden; }
-    .nbhd-full-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-    .nbhd-full-card:hover .nbhd-full-img img { transform: scale(1.04); }
-    .nbhd-full-body { padding: 48px; display: flex; flex-direction: column; justify-content: center; }
-    .nbhd-full-body h3 { margin-bottom: 12px; }
-    .nbhd-full-body p { margin-bottom: 20px; }
-    .nbhd-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .nbhd-tag-pill {
-      background: var(--color-accent-light);
+    .nbhd-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
+    .nbhd-card-img {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    .nbhd-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .nbhd-card:hover .nbhd-card-img img { transform: scale(1.05); }
+    .nbhd-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+    .nbhd-card-area { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 6px; }
+    .nbhd-card-body h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-primary); }
+    .nbhd-card-body p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; flex: 1; }
+    .nbhd-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .nbhd-tag {
+      background: rgba(201,168,76,0.1);
       color: var(--color-accent);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      padding: 5px 14px;
+      padding: 4px 10px;
       border-radius: 100px;
     }
-    .nbhd-stats { display: flex; gap: 24px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--color-border); }
-    .nbhd-stat span:first-child { display: block; font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-accent); }
-    .nbhd-stat span:last-child { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted); }
-    @media (max-width: 768px) {
-      .nbhd-full-card, .nbhd-full-card.reverse { grid-template-columns: 1fr; direction: ltr; }
-      .nbhd-full-body { padding: 28px 24px; }
-    }
+    .nbhd-stats { display: flex; gap: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .nbhd-stat-item { text-align: center; }
+    .nbhd-stat-item .stat-val { display: block; font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-accent); }
+    .nbhd-stat-item .stat-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+    @media (max-width: 1024px) { .nbhd-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .nbhd-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -74,7 +98,6 @@
 </header>
 
 <div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose">✕</button>
   <a href="properties.html">Active Listings</a>
   <a href="sold.html">Sold Properties</a>
   <a href="neighborhoods.html">Neighborhoods</a>
@@ -89,124 +112,372 @@
 <div class="page-hero">
   <div class="breadcrumb"><a href="index.html">Home</a> › Neighborhoods</div>
   <h1>Explore Neighborhoods</h1>
-  <p>Every community has its own personality. Find the one that feels like home.</p>
+  <p>From lakeside retreats to urban walkable districts — find the community that fits your life.</p>
 </div>
 
 <section class="section">
   <div class="container">
 
-    <div class="nbhd-full-card">
-      <div class="nbhd-full-img">
-        <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=75" alt="Downtown District" loading="lazy" />
-      </div>
-      <div class="nbhd-full-body">
-        <span class="section-label">Urban Living</span>
-        <h3>Downtown District</h3>
-        <p>The heartbeat of the city. Walk to boutique shops, award-winning restaurants, art galleries, and live music venues. Downtown living offers the perfect blend of culture and convenience.</p>
-        <div class="nbhd-tags">
-          <span class="nbhd-tag-pill">Walkable</span>
-          <span class="nbhd-tag-pill">Restaurants & Bars</span>
-          <span class="nbhd-tag-pill">Arts & Culture</span>
-          <span class="nbhd-tag-pill">Public Transit</span>
+    <!-- Minneapolis -->
+    <div class="nbhd-group">
+      <div class="nbhd-group-label">Minneapolis</div>
+      <h2 class="nbhd-group-title">City Neighborhoods</h2>
+      <div class="nbhd-grid">
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1555529771-7888783a18d3?w=700&q=70" alt="North Loop Minneapolis" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Urban · Trendy</div>
+            <h3>North Loop</h3>
+            <p>Minneapolis's most sought-after urban neighborhood. A converted warehouse district now home to luxury condos, acclaimed restaurants, boutique shops, and Target Field. Highly walkable with a vibrant energy day and night.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Walkable</span>
+              <span class="nbhd-tag">Dining & Nightlife</span>
+              <span class="nbhd-tag">Luxury Condos</span>
+              <span class="nbhd-tag">Target Field</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$475K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">95/100</span><span class="stat-lbl">Walk Score</span></div>
+            </div>
+          </div>
         </div>
-        <div class="nbhd-stats">
-          <div class="nbhd-stat"><span>$485K</span><span>Avg. Price</span></div>
-          <div class="nbhd-stat"><span>24</span><span>Active Listings</span></div>
-          <div class="nbhd-stat"><span>98/100</span><span>Walk Score</span></div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?w=700&q=70" alt="Northeast Minneapolis" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Urban · Creative</div>
+            <h3>Northeast Minneapolis</h3>
+            <p>A vibrant, creative hub known for its breweries, art galleries, and historic feel. Dense, walkable, and just a 10-minute drive to downtown. Northeast has evolved into one of Minneapolis's most dynamic and desirable neighborhoods.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Arts District</span>
+              <span class="nbhd-tag">Breweries</span>
+              <span class="nbhd-tag">Walkable</span>
+              <span class="nbhd-tag">Historic</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$380K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">10 min</span><span class="stat-lbl">To Downtown</span></div>
+            </div>
+          </div>
         </div>
-        <a href="properties.html" class="btn btn-primary" style="margin-top:24px;">View Listings</a>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=70" alt="Bde Maka Ska" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Urban · Waterfront</div>
+            <h3>Bde Maka Ska – Isles</h3>
+            <p>Nestled around the Chain of Lakes in Southwest Minneapolis. Offers immediate access to the water, world-class running and biking paths, and Theodore Wirth Park. One of the most coveted addresses in the city.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Chain of Lakes</span>
+              <span class="nbhd-tag">Waterfront</span>
+              <span class="nbhd-tag">Biking & Running</span>
+              <span class="nbhd-tag">Upscale</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$775K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">Lakes</span><span class="stat-lbl">Steps Away</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?w=700&q=70" alt="Kenwood Minneapolis" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Urban · Upscale</div>
+            <h3>Kenwood</h3>
+            <p>An affluent, quiet enclave adjacent to Kenwood Park and Lake of the Isles. Features grand historic homes on tree-lined streets with exceptional access to the Chain of Lakes trail system. Privacy and prestige in the heart of the city.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Historic Estates</span>
+              <span class="nbhd-tag">Lake of the Isles</span>
+              <span class="nbhd-tag">Trail Access</span>
+              <span class="nbhd-tag">Quiet</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$950K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">A+</span><span class="stat-lbl">Desirability</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=700&q=70" alt="Linden Hills Minneapolis" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Urban · Village</div>
+            <h3>Linden Hills</h3>
+            <p>A charming village neighborhood nestled between Lake Harriet and Bde Maka Ska. Known for its independent shops, beloved cafes, and a fiercely proud sense of community. One of Minneapolis's most walkable and beloved neighborhoods.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Village Feel</span>
+              <span class="nbhd-tag">Lake Harriet</span>
+              <span class="nbhd-tag">Walkable</span>
+              <span class="nbhd-tag">Family-Friendly</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$625K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">2 Lakes</span><span class="stat-lbl">Within Walking</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?w=700&q=70" alt="Greater Longfellow Minneapolis" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Urban · Community</div>
+            <h3>Greater Longfellow</h3>
+            <p>Made up of smaller sub-neighborhoods like Howe and Minnehaha. Residents enjoy a tight-knit, highly walkable community close to the Mississippi River, Minnehaha Falls, and local eateries. Authentic Minneapolis character at an accessible price point.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Minnehaha Falls</span>
+              <span class="nbhd-tag">Mississippi River</span>
+              <span class="nbhd-tag">Walkable</span>
+              <span class="nbhd-tag">Community</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$345K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">91/100</span><span class="stat-lbl">Walk Score</span></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="nbhd-full-card reverse">
-      <div class="nbhd-full-img">
-        <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=75" alt="Lakeside Estates" loading="lazy" />
-      </div>
-      <div class="nbhd-full-body">
-        <span class="section-label">Waterfront Living</span>
-        <h3>Lakeside Estates</h3>
-        <p>Stunning waterfront properties with private docks, panoramic lake views, and resort-style amenities. Lakeside Estates offers an exclusive retreat without sacrificing proximity to the city.</p>
-        <div class="nbhd-tags">
-          <span class="nbhd-tag-pill">Waterfront</span>
-          <span class="nbhd-tag-pill">Luxury Homes</span>
-          <span class="nbhd-tag-pill">Boating</span>
-          <span class="nbhd-tag-pill">Gated</span>
+    <!-- Saint Paul -->
+    <div class="nbhd-group">
+      <div class="nbhd-group-label">Saint Paul</div>
+      <h2 class="nbhd-group-title">Saint Paul Neighborhoods</h2>
+      <div class="nbhd-grid">
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=70" alt="Summit Hill Saint Paul" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Saint Paul · Historic</div>
+            <h3>Summit Hill</h3>
+            <p>One of St. Paul's most architecturally stunning neighborhoods, anchored by Summit Avenue — the longest stretch of Victorian homes in the United States. Quiet, tree-lined streets just steps from Grand Avenue's boutiques and dining.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Victorian Homes</span>
+              <span class="nbhd-tag">Summit Ave</span>
+              <span class="nbhd-tag">Grand Ave Shopping</span>
+              <span class="nbhd-tag">Historic</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$465K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">1880s+</span><span class="stat-lbl">Home Era</span></div>
+            </div>
+          </div>
         </div>
-        <div class="nbhd-stats">
-          <div class="nbhd-stat"><span>$1.2M</span><span>Avg. Price</span></div>
-          <div class="nbhd-stat"><span>8</span><span>Active Listings</span></div>
-          <div class="nbhd-stat"><span>Private</span><span>Community</span></div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=700&q=70" alt="Cathedral Hill Saint Paul" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Saint Paul · Eclectic</div>
+            <h3>Cathedral Hill</h3>
+            <p>Named for the iconic Cathedral of Saint Paul that defines its skyline. An eclectic mix of historic architecture, independent coffee shops, boutique restaurants, and galleries. Highly walkable and close to downtown St. Paul.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Cathedral Views</span>
+              <span class="nbhd-tag">Walkable</span>
+              <span class="nbhd-tag">Dining & Cafes</span>
+              <span class="nbhd-tag">Galleries</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$385K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">5 min</span><span class="stat-lbl">To Downtown</span></div>
+            </div>
+          </div>
         </div>
-        <a href="properties.html" class="btn btn-primary" style="margin-top:24px;">View Listings</a>
+
       </div>
     </div>
 
-    <div class="nbhd-full-card">
-      <div class="nbhd-full-img">
-        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=75" alt="Maple Grove" loading="lazy" />
-      </div>
-      <div class="nbhd-full-body">
-        <span class="section-label">Family-Friendly</span>
-        <h3>Maple Grove</h3>
-        <p>Top-ranked schools, tree-lined streets, and a tight-knit community make Maple Grove the top choice for families. Enjoy parks, sports leagues, and neighborhood events year-round.</p>
-        <div class="nbhd-tags">
-          <span class="nbhd-tag-pill">Top Schools</span>
-          <span class="nbhd-tag-pill">Parks & Trails</span>
-          <span class="nbhd-tag-pill">Safe Streets</span>
-          <span class="nbhd-tag-pill">Community Events</span>
-        </div>
-        <div class="nbhd-stats">
-          <div class="nbhd-stat"><span>$620K</span><span>Avg. Price</span></div>
-          <div class="nbhd-stat"><span>15</span><span>Active Listings</span></div>
-          <div class="nbhd-stat"><span>A+</span><span>School Rating</span></div>
-        </div>
-        <a href="properties.html" class="btn btn-primary" style="margin-top:24px;">View Listings</a>
-      </div>
-    </div>
+    <!-- Suburbs -->
+    <div class="nbhd-group">
+      <div class="nbhd-group-label">Twin Cities Metro</div>
+      <h2 class="nbhd-group-title">Suburbs & Communities</h2>
+      <div class="nbhd-grid">
 
-    <div class="nbhd-full-card reverse">
-      <div class="nbhd-full-img">
-        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=75" alt="Ridgecrest" loading="lazy" />
-      </div>
-      <div class="nbhd-full-body">
-        <span class="section-label">Elevated Living</span>
-        <h3>Ridgecrest Highlands</h3>
-        <p>Perched above the city with breathtaking views, Ridgecrest Highlands features estate homes on generous lots. A quiet, upscale enclave with easy freeway access.</p>
-        <div class="nbhd-tags">
-          <span class="nbhd-tag-pill">Panoramic Views</span>
-          <span class="nbhd-tag-pill">Estate Lots</span>
-          <span class="nbhd-tag-pill">Quiet & Private</span>
-          <span class="nbhd-tag-pill">Luxury</span>
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=700&q=70" alt="Edina Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Southwest Suburb</div>
+            <h3>Edina</h3>
+            <p>Consistently cited as one of the best suburbs in the state. Boasts exceptional public school districts, beautiful parks, and high safety ratings — all anchored by popular shopping destinations like Southdale Center.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Top Schools</span>
+              <span class="nbhd-tag">Safe & Established</span>
+              <span class="nbhd-tag">Southdale Center</span>
+              <span class="nbhd-tag">Luxury Homes</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$675K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">A+</span><span class="stat-lbl">School Rating</span></div>
+            </div>
+          </div>
         </div>
-        <div class="nbhd-stats">
-          <div class="nbhd-stat"><span>$950K</span><span>Avg. Price</span></div>
-          <div class="nbhd-stat"><span>11</span><span>Active Listings</span></div>
-          <div class="nbhd-stat"><span>1 Acre+</span><span>Avg. Lot Size</span></div>
-        </div>
-        <a href="properties.html" class="btn btn-primary" style="margin-top:24px;">View Listings</a>
-      </div>
-    </div>
 
-    <div class="nbhd-full-card">
-      <div class="nbhd-full-img">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=75" alt="Old Town" loading="lazy" />
-      </div>
-      <div class="nbhd-full-body">
-        <span class="section-label">Historic Charm</span>
-        <h3>Old Town Historic District</h3>
-        <p>Character-rich homes with original architecture, brick-paved streets, and a vibrant local scene. Old Town blends historic charm with modern renovation and a strong sense of community.</p>
-        <div class="nbhd-tags">
-          <span class="nbhd-tag-pill">Historic Homes</span>
-          <span class="nbhd-tag-pill">Walkable</span>
-          <span class="nbhd-tag-pill">Cafés & Shops</span>
-          <span class="nbhd-tag-pill">Renovation Potential</span>
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=70" alt="Plymouth Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Northwest Suburb</div>
+            <h3>Plymouth</h3>
+            <p>Consistently ranked among the best places to live in America. Perfectly balances suburban living with modern convenience, feeding into the prestigious Wayzata Public Schools and featuring extensive trail systems and Medicine Lake.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Wayzata Schools</span>
+              <span class="nbhd-tag">Trail Systems</span>
+              <span class="nbhd-tag">Medicine Lake</span>
+              <span class="nbhd-tag">Family-Friendly</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$510K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">#1</span><span class="stat-lbl">Best Suburb Rank</span></div>
+            </div>
+          </div>
         </div>
-        <div class="nbhd-stats">
-          <div class="nbhd-stat"><span>$390K</span><span>Avg. Price</span></div>
-          <div class="nbhd-stat"><span>19</span><span>Active Listings</span></div>
-          <div class="nbhd-stat"><span>1890s+</span><span>Home Era</span></div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=70" alt="Maple Grove Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Northwest Suburb</div>
+            <h3>Maple Grove</h3>
+            <p>Top-ranked schools, tree-lined streets, and a tight-knit community make Maple Grove a top choice for families. Enjoy exceptional parks, sports leagues, The Shoppes at Arbor Lakes, and neighborhood events year-round.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Top Schools</span>
+              <span class="nbhd-tag">Parks & Trails</span>
+              <span class="nbhd-tag">Arbor Lakes</span>
+              <span class="nbhd-tag">Community Events</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$490K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">A+</span><span class="stat-lbl">School Rating</span></div>
+            </div>
+          </div>
         </div>
-        <a href="properties.html" class="btn btn-primary" style="margin-top:24px;">View Listings</a>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=70" alt="Woodbury Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">East Suburb</div>
+            <h3>Woodbury</h3>
+            <p>A rapidly growing, master-planned suburb east of St. Paul. Offers abundant green space, top-rated schools, and expansive family-friendly amenities. One of the fastest-growing cities in Minnesota with a strong sense of community planning.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Master-Planned</span>
+              <span class="nbhd-tag">Green Space</span>
+              <span class="nbhd-tag">Top Schools</span>
+              <span class="nbhd-tag">New Construction</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$455K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">30+</span><span class="stat-lbl">Parks & Trails</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=70" alt="Eden Prairie Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">Southwest Suburb</div>
+            <h3>Eden Prairie</h3>
+            <p>A thriving southwestern suburb with award-winning schools, abundant parks, and a strong corporate presence. Features newer construction, excellent retail and dining at Eden Prairie Center, and easy freeway access to all of the metro.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Award-Winning Schools</span>
+              <span class="nbhd-tag">Corporate Hub</span>
+              <span class="nbhd-tag">New Construction</span>
+              <span class="nbhd-tag">Parks & Lakes</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$535K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">A+</span><span class="stat-lbl">School Rating</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=700&q=70" alt="Wayzata Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">West Suburb · Waterfront</div>
+            <h3>Wayzata</h3>
+            <p>A picturesque lakeside city on the shores of Lake Minnetonka. Known for its charming downtown, world-class dining, luxury waterfront properties, and boating culture. One of the most prestigious addresses in the entire Twin Cities metro.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Lake Minnetonka</span>
+              <span class="nbhd-tag">Luxury Waterfront</span>
+              <span class="nbhd-tag">Boating</span>
+              <span class="nbhd-tag">Charming Downtown</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$1.1M</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">Lake MN</span><span class="stat-lbl">Direct Access</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=700&q=70" alt="Minnetonka Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">West Suburb</div>
+            <h3>Minnetonka</h3>
+            <p>A sprawling western suburb offering a mix of wooded lots, lakes, and established neighborhoods. Home to the prestigious Minnetonka School District — consistently one of the top public school systems in the state — and close to major employment centers.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Minnetonka Schools</span>
+              <span class="nbhd-tag">Wooded Lots</span>
+              <span class="nbhd-tag">Lake Access</span>
+              <span class="nbhd-tag">Established</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$580K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">Top 5</span><span class="stat-lbl">MN School District</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nbhd-card">
+          <div class="nbhd-card-img">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=700&q=70" alt="North Oaks Minnesota" loading="lazy" />
+          </div>
+          <div class="nbhd-card-body">
+            <div class="nbhd-card-area">North Suburb · Exclusive</div>
+            <h3>North Oaks</h3>
+            <p>One of the most exclusive and unique communities in Minnesota — and the entire country. North Oaks is a private city where residents own shares in the surrounding land, including miles of private trails, wetlands, and Pleasant Lake. Wooded luxury estates and extraordinary seclusion, just 15 miles from downtown St. Paul.</p>
+            <div class="nbhd-tags">
+              <span class="nbhd-tag">Private City</span>
+              <span class="nbhd-tag">Pleasant Lake</span>
+              <span class="nbhd-tag">Wooded Estates</span>
+              <span class="nbhd-tag">Exclusive</span>
+            </div>
+            <div class="nbhd-stats">
+              <div class="nbhd-stat-item"><span class="stat-val">$825K</span><span class="stat-lbl">Avg. Price</span></div>
+              <div class="nbhd-stat-item"><span class="stat-val">Private</span><span class="stat-lbl">Gated Community</span></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -218,14 +489,14 @@
     <h2>Not Sure Which Neighborhood Is Right for You?</h2>
     <p>Let's talk about your lifestyle, priorities, and budget — I'll help you find the perfect fit.</p>
     <div class="cta-actions">
-      <a href="contact.html" class="btn btn-white">Schedule a Consultation</a>
+      <a href="contact.html" class="btn btn-white">Let's Chat</a>
     </div>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-inner">
-        <div class="footer-brand">
+    <div class="footer-brand">
       <img src="images/logo-bs-white.png" alt="Ben's Estates" style="height:52px;width:auto;margin-bottom:16px;" />
       <p>Serving Minneapolis, Twin Cities, and surrounding communities with honesty, expertise, and a commitment to finding you the perfect home.</p>
       <div class="social-links" style="margin-top:24px;">
@@ -258,8 +529,7 @@
 </footer>
 
 <script>
-  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
-  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('open'));
 </script>
 </body>
 </html>
