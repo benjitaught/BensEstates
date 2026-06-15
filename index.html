@@ -474,10 +474,11 @@
       grid.prepend(track);
       let current = 0;
       const total = cards.length;
-      setInterval(function() {
+      function advance() {
         current = (current + 1) % total;
-        track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      }, 3000);
+        track.style.transform = 'translateX(-' + (current * grid.offsetWidth) + 'px)';
+      }
+      setInterval(advance, 3000);
     });
   })();
 

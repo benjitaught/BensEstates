@@ -925,8 +925,7 @@ em { font-style: italic; color: var(--color-accent); }
   }
   .tc-track .testimonial-card {
     flex-shrink: 0;
-    width: calc(100% - 16px);
-    margin: 0 8px;
+    width: 100%;
     background: rgba(255,255,255,0.055);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
