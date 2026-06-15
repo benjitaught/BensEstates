@@ -793,9 +793,9 @@ em { font-style: italic; color: var(--color-accent); }
   max-width: var(--max-width);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 56px;
-  padding-bottom: 56px;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
   border-bottom: 1px solid var(--border);
 }
 .footer-brand p { font-size: 0.875rem; margin-top: 20px; line-height: 1.9; max-width: 320px; color: var(--text-muted); }
@@ -827,7 +827,42 @@ em { font-style: italic; color: var(--color-accent); }
 
 /* ── Vaura credit ── */
 .footer-vaura { background: var(--bg-0); }
-.footer-vaura img { vertical-align: middle; }
+.footer-vaura img { vertical-align: middle; height: 40px !important; }
+
+/* ── Contact page quick-link glass buttons (mobile) ── */
+@media (max-width: 768px) {
+  .contact-quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: none;
+  }
+  .contact-quick-links a {
+    display: block;
+    text-decoration: none;
+  }
+  .contact-quick-links .service-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+    border-top: none;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+  }
+  .contact-quick-links .service-card:active {
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .contact-quick-links .service-icon { font-size: 1.4rem; flex-shrink: 0; margin-bottom: 0; }
+  .contact-quick-links .service-card h3 { font-size: 1rem; margin-bottom: 2px; }
+  .contact-quick-links .service-card p  { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+}
 
 /* ── Neighborhood full cards ── */
 .nbhd-full-card {
@@ -876,7 +911,7 @@ em { font-style: italic; color: var(--color-accent); }
 /* ── Responsive ── */
 @media (max-width: 1024px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-inner { grid-template-columns: 2fr 1fr 1fr; }
   .stats-inner { grid-template-columns: repeat(2, 1fr); }
   .listings-grid { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -896,7 +931,8 @@ em { font-style: italic; color: var(--color-accent); }
   .form-grid { grid-template-columns: 1fr; }
   .valuation-form-wrap { padding: 32px 24px; }
   .contact-info-card { padding: 32px 24px; }
-  .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-brand { grid-column: 1 / -1; }
   .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
   .newsletter-form { flex-direction: column; }
   .hero-search { padding: 24px; margin-bottom: 48px; }
