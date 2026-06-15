@@ -245,32 +245,44 @@
 </section>
 
 <!-- ── SERVICES ── -->
-<section class="section">
+<section class="section" style="overflow:hidden;">
   <div class="container">
-    <div class="section-center mb-48">
-      <span class="section-label">What I Offer</span>
-      <h2>Full-Service Real Estate</h2>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:16px;">
+      <div>
+        <span class="section-label">What I Offer</span>
+        <h2>Full-Service Real Estate</h2>
+      </div>
+      <div class="carousel-controls-desktop">
+        <button class="carousel-btn" id="svcPrev" aria-label="Previous">&#8592;</button>
+        <button class="carousel-btn" id="svcNext" aria-label="Next">&#8594;</button>
+      </div>
     </div>
-    <div class="services-grid">
-      <div class="service-card">
+  </div>
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="svcTrack">
+      <div class="service-card carousel-slide">
         <div class="service-icon">🏠</div>
         <h3>Buying a Home</h3>
         <p>From pre-approval to closing day, I guide you through every step of the buying process — so you get the right home at the right price.</p>
         <a href="buyers.html" class="btn btn-outline">Buyer's Guide →</a>
       </div>
-      <div class="service-card">
+      <div class="service-card carousel-slide">
         <div class="service-icon">💰</div>
         <h3>Selling Your Home</h3>
         <p>Strategic marketing, professional photography, and expert negotiation to get your home sold fast — for the most money possible.</p>
         <a href="sellers.html" class="btn btn-outline">Seller's Guide →</a>
       </div>
-      <div class="service-card">
+      <div class="service-card carousel-slide">
         <div class="service-icon">📊</div>
         <h3>Home Valuation</h3>
         <p>Curious what your home is worth in today's market? Get a free, no-obligation comparative market analysis in minutes.</p>
         <a href="home-valuation.html" class="btn btn-outline">Get My Value →</a>
       </div>
     </div>
+  </div>
+  <div class="carousel-controls-mobile">
+    <button class="carousel-btn" id="svcPrevMob" aria-label="Previous">&#8592;</button>
+    <button class="carousel-btn" id="svcNextMob" aria-label="Next">&#8594;</button>
   </div>
 </section>
 
@@ -519,6 +531,36 @@
 
   window.addEventListener('resize', () => goTo(Math.min(current, maxIndex())));
   updateButtons();
+
+  // ── Services carousel ──
+  const svcTrack = document.getElementById('svcTrack');
+  const svcSlides = svcTrack.querySelectorAll('.carousel-slide');
+  let svcCurrent = 0;
+
+  function svcVisible() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function svcMaxIndex() { return svcSlides.length - svcVisible(); }
+
+  function svcGoTo(index) {
+    svcCurrent = Math.max(0, Math.min(index, svcMaxIndex()));
+    const w = svcSlides[0].offsetWidth + 20;
+    svcTrack.style.transform = `translateX(-${svcCurrent * w}px)`;
+    document.getElementById('svcPrev').disabled = svcCurrent === 0;
+    document.getElementById('svcNext').disabled = svcCurrent >= svcMaxIndex();
+    document.getElementById('svcPrevMob').disabled = svcCurrent === 0;
+    document.getElementById('svcNextMob').disabled = svcCurrent >= svcMaxIndex();
+  }
+
+  document.getElementById('svcPrev').addEventListener('click', () => svcGoTo(svcCurrent - 1));
+  document.getElementById('svcNext').addEventListener('click', () => svcGoTo(svcCurrent + 1));
+  document.getElementById('svcPrevMob').addEventListener('click', () => svcGoTo(svcCurrent - 1));
+  document.getElementById('svcNextMob').addEventListener('click', () => svcGoTo(svcCurrent + 1));
+  window.addEventListener('resize', () => svcGoTo(Math.min(svcCurrent, svcMaxIndex())));
+  svcGoTo(0);
 </script>
 </body>
 </html>
