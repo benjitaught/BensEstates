@@ -246,15 +246,9 @@
 <!-- ── SERVICES ── -->
 <section class="section" style="overflow:hidden;">
   <div class="container">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:16px;">
-      <div>
-        <span class="section-label">What I Offer</span>
-        <h2>Full-Service Real Estate</h2>
-      </div>
-      <div class="carousel-controls-desktop">
-        <button class="carousel-btn" id="svcPrev" aria-label="Previous">&#8592;</button>
-        <button class="carousel-btn" id="svcNext" aria-label="Next">&#8594;</button>
-      </div>
+    <div class="section-center mb-48">
+      <span class="section-label">What I Offer</span>
+      <h2>Full-Service Real Estate</h2>
     </div>
   </div>
   <div class="carousel-viewport">
@@ -278,10 +272,6 @@
         <a href="home-valuation.html" class="btn btn-outline">Get My Value →</a>
       </div>
     </div>
-  </div>
-  <div class="carousel-controls-mobile">
-    <button class="carousel-btn" id="svcPrevMob" aria-label="Previous">&#8592;</button>
-    <button class="carousel-btn" id="svcNextMob" aria-label="Next">&#8594;</button>
   </div>
 </section>
 
@@ -563,10 +553,6 @@
     document.getElementById('svcNextMob').disabled = svcCurrent >= svcMaxIndex();
   }
 
-  document.getElementById('svcPrev').addEventListener('click', () => svcGoTo(svcCurrent - 1));
-  document.getElementById('svcNext').addEventListener('click', () => svcGoTo(svcCurrent + 1));
-  document.getElementById('svcPrevMob').addEventListener('click', () => svcGoTo(svcCurrent - 1));
-  document.getElementById('svcNextMob').addEventListener('click', () => svcGoTo(svcCurrent + 1));
   window.addEventListener('resize', () => svcGoTo(Math.min(svcCurrent, svcMaxIndex())));
   svcGoTo(0);
 
