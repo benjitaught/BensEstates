@@ -277,6 +277,27 @@
   const mobileNav = document.getElementById('mobileNav');
   navToggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); });
 
+  // Testimonials — single-card fade carousel (mobile only)
+  (function() {
+    if (window.innerWidth > 768) return;
+    const grids = document.querySelectorAll('.testimonials-grid');
+    grids.forEach(function(grid) {
+      const cards = Array.from(grid.querySelectorAll('.testimonial-card'));
+      if (!cards.length) return;
+      let current = 0;
+      cards[0].classList.add('tc-active');
+      setInterval(function() {
+        const prev = current;
+        current = (current + 1) % cards.length;
+        cards[prev].classList.replace('tc-active', 'tc-fade');
+        setTimeout(function() {
+          cards[prev].classList.remove('tc-fade');
+          cards[current].classList.add('tc-active');
+        }, 620);
+      }, 3000);
+    });
+  })();
+
   // Values reel — clone cards for seamless infinite CSS scroll
   (function() {
     const reel = document.getElementById('valuesReel');

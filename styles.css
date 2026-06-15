@@ -910,41 +910,33 @@ em { font-style: italic; color: var(--color-accent); }
   /* ── Values reel (mobile overrides) ── */
   .values-reel-card { width: 68vw; max-width: 240px; }
 
-  /* ── Testimonials — floating glass cluster (mobile) ── */
+  /* ── Testimonials — single-card glass carousel (mobile) ── */
   .testimonials-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: block;
     background: transparent;
     margin-top: 28px;
-    align-items: start;
-    padding: 12px 4px 32px;
+    position: relative;
   }
   .testimonial-card {
+    display: none;
     background: rgba(255,255,255,0.055);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     border: 1px solid rgba(255,255,255,0.13);
     border-radius: 22px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
-    padding: 20px 16px;
-    position: relative;
+    padding: 28px 24px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
   }
-  .testimonial-card:first-child {
-    grid-column: 1 / -1;
-    transform: rotate(0.4deg);
-    padding: 24px 20px;
+  .testimonial-card.tc-active {
+    display: block;
+    opacity: 1;
   }
-  .testimonial-card:nth-child(2) { transform: translateY(6px) rotate(-1.2deg); z-index: 2; }
-  .testimonial-card:nth-child(3) { transform: translateY(-4px) rotate(1deg); z-index: 1; }
-  .testimonial-card:nth-child(4) { transform: translateY(14px) rotate(0.8deg); z-index: 2; }
-  .testimonial-card:nth-child(5) { transform: translateY(2px) rotate(-1.5deg); z-index: 1; }
-  .testimonial-card:nth-child(6) { grid-column: 1 / -1; transform: rotate(-0.3deg); }
-  .testimonial-card .stars { font-size: 0.75rem; margin-bottom: 10px; }
-  .testimonial-text { font-size: 0.82rem; line-height: 1.7; margin-bottom: 16px; }
-  .author-avatar { width: 34px; height: 34px; font-size: 0.72rem; }
-  .author-name { font-size: 0.8rem; }
-  .author-detail { font-size: 0.68rem; }
+  .testimonial-card.tc-fade {
+    display: block;
+    opacity: 0;
+  }
   .testimonials-review-cta { text-align: center; margin-top: 24px; }
 }
 
