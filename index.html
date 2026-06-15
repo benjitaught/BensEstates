@@ -317,11 +317,6 @@
     </div>
   </div>
 
-  <div class="carousel-controls-mobile" style="margin-top:24px;">
-    <button class="carousel-btn" id="nbhdPrev" aria-label="Previous">&#8592;</button>
-    <button class="carousel-btn" id="nbhdNext" aria-label="Next">&#8594;</button>
-  </div>
-
   <div style="text-align:center;margin-top:32px;">
     <a href="neighborhoods.html" class="btn btn-outline">Explore All Neighborhoods</a>
   </div>
@@ -577,8 +572,6 @@
     document.getElementById('nbhdNext').disabled = nbhdCurrent >= nbhdMaxIndex();
   }
 
-  document.getElementById('nbhdPrev').addEventListener('click', () => nbhdGoTo(nbhdCurrent - 1));
-  document.getElementById('nbhdNext').addEventListener('click', () => nbhdGoTo(nbhdCurrent + 1));
   window.addEventListener('resize', () => nbhdGoTo(Math.min(nbhdCurrent, nbhdMaxIndex())));
   nbhdGoTo(0);
 </script>
