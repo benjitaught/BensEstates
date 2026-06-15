@@ -118,61 +118,12 @@
         </div>
       </div>
 
-      <!-- Contact Form -->
-      <div style="background:var(--bg-2);padding:48px;border-radius:var(--radius-lg);border:1px solid var(--border);">
-        <span class="section-label">Send a Message</span>
-        <h3 style="margin-bottom:28px;">How Can I Help You?</h3>
-
-        <form onsubmit="handleSubmit(event);" id="contactForm">
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label">First Name *</label>
-              <input class="form-input" type="text" placeholder="Jane" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Last Name *</label>
-              <input class="form-input" type="text" placeholder="Smith" required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email *</label>
-            <input class="form-input" type="email" placeholder="jane@email.com" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Phone</label>
-            <input class="form-input" type="tel" placeholder="(555) 000-0000" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">I'm Interested In…</label>
-            <select class="form-select">
-              <option>Select a topic</option>
-              <option>Buying a Home</option>
-              <option>Selling My Home</option>
-              <option>Home Valuation</option>
-              <option>Renting</option>
-              <option>Investment Properties</option>
-              <option>Just Exploring</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Message *</label>
-            <textarea class="form-textarea" placeholder="Tell me about your situation, timeline, or any questions you have…" required></textarea>
-          </div>
-          <div class="form-group" style="display:flex;gap:10px;align-items:flex-start;">
-            <input type="checkbox" id="consent" style="margin-top:3px;flex-shrink:0;" />
-            <label for="consent" class="form-consent">I agree to be contacted by Benjamin Smith Real Estate regarding my inquiry. I understand my information will not be shared or sold. <a href="#">Privacy Policy</a>.</label>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:16px;">
-            Send Message
-          </button>
-        </form>
-
-        <div id="successMsg" style="display:none;text-align:center;padding:32px 0;">
-          <div style="font-size:3rem;margin-bottom:16px;">✅</div>
-          <h4 style="margin-bottom:8px;">Message Sent!</h4>
-          <p>Thank you for reaching out. I'll be in touch within 2 hours.</p>
-        </div>
+      <!-- Calendly Embed -->
+      <div style="background:var(--bg-2);border-radius:var(--radius-lg);border:1px solid var(--border);overflow:hidden;">
+        <span class="section-label" style="display:block;padding:28px 28px 0;">Book a Time</span>
+        <h3 style="padding:8px 28px 0;margin-bottom:0;">Schedule a Call</h3>
+        <div class="calendly-inline-widget" data-url="https://calendly.com/bensestates/chat?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=161616&text_color=ffffff&primary_color=c9a84c" style="min-width:280px;height:700px;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
       </div>
 
     </div>
