@@ -66,7 +66,53 @@
     .nbhd-stat-item .stat-val { display: block; font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-accent); }
     .nbhd-stat-item .stat-lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
     @media (max-width: 1024px) { .nbhd-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .nbhd-grid { grid-template-columns: 1fr; } }
+
+    /* Mobile carousel */
+    @media (max-width: 600px) {
+      .nbhd-grid-wrap { overflow: hidden; position: relative; }
+      .nbhd-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+        gap: 0;
+      }
+      .nbhd-card {
+        flex: 0 0 100%;
+        min-width: 0;
+        margin: 0 8px;
+        box-sizing: border-box;
+      }
+      .nbhd-carousel-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .nbhd-carousel-btn {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: #fff;
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.2s;
+      }
+      .nbhd-carousel-btn:disabled { opacity: 0.3; cursor: default; }
+      .nbhd-carousel-dots { display: flex; gap: 6px; }
+      .nbhd-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        transition: background 0.2s;
+      }
+      .nbhd-dot.active { background: var(--color-accent); }
+    }
+    @media (min-width: 601px) {
+      .nbhd-carousel-nav { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -122,7 +168,7 @@
     <div class="nbhd-group">
       <div class="nbhd-group-label">Minneapolis</div>
       <h2 class="nbhd-group-title">City Neighborhoods</h2>
-      <div class="nbhd-grid">
+      <div class="nbhd-grid-wrap" id="mpls-grid-wrap"><div class="nbhd-grid" id="mpls-grid">
 
         <div class="nbhd-card">
           <div class="nbhd-card-img">
@@ -251,13 +297,19 @@
         </div>
 
       </div>
+        <div class="nbhd-carousel-nav" id="mpls-grid-nav">
+          <button class="nbhd-carousel-btn" id="mpls-grid-prev" aria-label="Previous">&#8592;</button>
+          <div class="nbhd-dots" id="mpls-grid-dots"></div>
+          <button class="nbhd-carousel-btn" id="mpls-grid-next" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
     </div>
 
     <!-- Saint Paul -->
     <div class="nbhd-group">
       <div class="nbhd-group-label">Saint Paul</div>
       <h2 class="nbhd-group-title">Saint Paul Neighborhoods</h2>
-      <div class="nbhd-grid">
+      <div class="nbhd-grid-wrap" id="stpaul-grid-wrap"><div class="nbhd-grid" id="stpaul-grid">
 
         <div class="nbhd-card">
           <div class="nbhd-card-img">
@@ -302,13 +354,19 @@
         </div>
 
       </div>
+        <div class="nbhd-carousel-nav" id="stpaul-grid-nav">
+          <button class="nbhd-carousel-btn" id="stpaul-grid-prev" aria-label="Previous">&#8592;</button>
+          <div class="nbhd-dots" id="stpaul-grid-dots"></div>
+          <button class="nbhd-carousel-btn" id="stpaul-grid-next" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
     </div>
 
     <!-- Suburbs -->
     <div class="nbhd-group">
       <div class="nbhd-group-label">Twin Cities Metro</div>
       <h2 class="nbhd-group-title">Suburbs & Communities</h2>
-      <div class="nbhd-grid">
+      <div class="nbhd-grid-wrap" id="suburbs-grid-wrap"><div class="nbhd-grid" id="suburbs-grid">
 
         <div class="nbhd-card">
           <div class="nbhd-card-img">
@@ -521,6 +579,12 @@
         </div>
 
       </div>
+        <div class="nbhd-carousel-nav" id="suburbs-grid-nav">
+          <button class="nbhd-carousel-btn" id="suburbs-grid-prev" aria-label="Previous">&#8592;</button>
+          <div class="nbhd-dots" id="suburbs-grid-dots"></div>
+          <button class="nbhd-carousel-btn" id="suburbs-grid-next" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -572,6 +636,58 @@
 
 <script>
   document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('open'));
+
+  // Mobile carousel for neighborhood grids
+  (function() {
+    if (window.innerWidth > 600) return;
+
+    const grids = ['mpls-grid', 'stpaul-grid', 'suburbs-grid'];
+
+    grids.forEach(function(gridId) {
+      const grid = document.getElementById(gridId);
+      if (!grid) return;
+      const cards = grid.querySelectorAll('.nbhd-card');
+      const total = cards.length;
+      let current = 0;
+
+      // Build dots
+      const dotsEl = document.getElementById(gridId + '-dots');
+      dotsEl.className = 'nbhd-carousel-dots';
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'nbhd-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', function() { goTo(i); });
+        dotsEl.appendChild(dot);
+      }
+
+      const prevBtn = document.getElementById(gridId + '-prev');
+      const nextBtn = document.getElementById(gridId + '-next');
+
+      function goTo(idx) {
+        current = Math.max(0, Math.min(idx, total - 1));
+        const w = grid.parentElement.offsetWidth;
+        grid.style.transform = 'translateX(-' + (current * w) + 'px)';
+        dotsEl.querySelectorAll('.nbhd-dot').forEach(function(d, i) {
+          d.classList.toggle('active', i === current);
+        });
+        prevBtn.disabled = current === 0;
+        nextBtn.disabled = current === total - 1;
+      }
+
+      prevBtn.addEventListener('click', function() { goTo(current - 1); });
+      nextBtn.addEventListener('click', function() { goTo(current + 1); });
+
+      // Touch swipe support
+      let startX = 0;
+      grid.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+      grid.addEventListener('touchend', function(e) {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+      });
+
+      goTo(0);
+    });
+  })();
 </script>
 </body>
 </html>
