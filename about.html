@@ -39,7 +39,6 @@
 </header>
 
 <div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose">✕</button>
   <a href="properties.html">Active Listings</a>
   <a href="sold.html">Sold Properties</a>
   <a href="neighborhoods.html">Neighborhoods</a>
@@ -292,8 +291,7 @@
 <script>
   const navToggle = document.getElementById('navToggle');
   const mobileNav = document.getElementById('mobileNav');
-  navToggle.addEventListener('click', () => { mobileNav.classList.add('open'); navToggle.classList.add('hidden'); });
-  document.getElementById('mobileClose').addEventListener('click', () => { mobileNav.classList.remove('open'); navToggle.classList.remove('hidden'); });
+  navToggle.addEventListener('click', () => { mobileNav.classList.toggle('open'); });
 
   // Values carousel — auto-rotate on mobile
   (function() {
