@@ -360,8 +360,9 @@
         </div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:48px;">
+    <div style="text-align:center;margin-top:48px;display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
       <a href="about.html#reviews" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;">Read More Reviews</a>
+      <a href="https://share.google/IOZuWatDC1GRrAfrf" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;">⭐ Leave a Review on Google</a>
     </div>
   </div>
 </section>
@@ -462,12 +463,10 @@
   });
 
   // Mobile nav
-  document.getElementById('navToggle').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.add('open');
-  });
-  document.getElementById('mobileClose').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.remove('open');
-  });
+  const navToggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  navToggle.addEventListener('click', () => { mobileNav.classList.add('open'); navToggle.classList.add('hidden'); });
+  document.getElementById('mobileClose').addEventListener('click', () => { mobileNav.classList.remove('open'); navToggle.classList.remove('hidden'); });
 
   // ── Carousel ──
   const track = document.getElementById('carouselTrack');

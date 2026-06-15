@@ -61,7 +61,7 @@
 <section class="section" style="background:var(--bg-2);">
   <div class="container">
     <div class="grid-2">
-      <div class="about-image-wrap" style="padding-bottom:48px;">
+      <div class="about-image-wrap" style="padding-bottom:20px;">
         <img src="images/ben-headshot.jpg" alt="Benjamin Smith" style="width:100%;min-height:500px;aspect-ratio:3/4;object-fit:cover;object-position:center top;" />
       </div>
       <div class="about-content">
@@ -101,56 +101,36 @@
       <span class="section-label">How I Work</span>
       <h2>My Core Values</h2>
     </div>
-    <div class="grid-3">
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Intricacy</h3>
-        <p>In my approach toward detail.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Opulence</h3>
-        <p>With every experience I bring my clients.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Divergence</h3>
-        <p>In creativity and originality.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Gratitude</h3>
-        <p>For opportunity in relationships.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Loyalty</h3>
-        <p>To my clients and team.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Independence</h3>
-        <p>In self sufficiency and intellection.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Tenacity</h3>
-        <p>In my diligence to ensure a proper experience.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Reliability</h3>
-        <p>In all aspects for everyone.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Tranquility</h3>
-        <p>In an easy transaction process.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">♚</div>
-        <h3>Morality</h3>
-        <p>Deeply embedded in client care, ethics and reciprocity.</p>
+    <!-- Desktop grid -->
+    <div class="grid-3 values-desktop">
+      <div class="service-card"><h3>Intricacy</h3><p>In my approach toward detail.</p></div>
+      <div class="service-card"><h3>Opulence</h3><p>With every experience I bring my clients.</p></div>
+      <div class="service-card"><h3>Divergence</h3><p>In creativity and originality.</p></div>
+      <div class="service-card"><h3>Gratitude</h3><p>For opportunity in relationships.</p></div>
+      <div class="service-card"><h3>Loyalty</h3><p>To my clients and team.</p></div>
+      <div class="service-card"><h3>Independence</h3><p>In self sufficiency and intellection.</p></div>
+      <div class="service-card"><h3>Tenacity</h3><p>In my diligence to ensure a proper experience.</p></div>
+      <div class="service-card"><h3>Reliability</h3><p>In all aspects for everyone.</p></div>
+      <div class="service-card"><h3>Tranquility</h3><p>In an easy transaction process.</p></div>
+      <div class="service-card"><h3>Morality</h3><p>Deeply embedded in client care, ethics and reciprocity.</p></div>
+    </div>
+    <!-- Mobile carousel -->
+    <div class="values-carousel-wrap values-mobile">
+      <div class="values-carousel-fade values-carousel-fade--left"></div>
+      <div class="values-carousel-fade values-carousel-fade--right"></div>
+      <div class="values-carousel" id="valuesCarousel">
+        <div class="values-carousel-track" id="valuesTrack">
+          <div class="service-card values-slide"><h3>Intricacy</h3><p>In my approach toward detail.</p></div>
+          <div class="service-card values-slide"><h3>Opulence</h3><p>With every experience I bring my clients.</p></div>
+          <div class="service-card values-slide"><h3>Divergence</h3><p>In creativity and originality.</p></div>
+          <div class="service-card values-slide"><h3>Gratitude</h3><p>For opportunity in relationships.</p></div>
+          <div class="service-card values-slide"><h3>Loyalty</h3><p>To my clients and team.</p></div>
+          <div class="service-card values-slide"><h3>Independence</h3><p>In self sufficiency and intellection.</p></div>
+          <div class="service-card values-slide"><h3>Tenacity</h3><p>In my diligence to ensure a proper experience.</p></div>
+          <div class="service-card values-slide"><h3>Reliability</h3><p>In all aspects for everyone.</p></div>
+          <div class="service-card values-slide"><h3>Tranquility</h3><p>In an easy transaction process.</p></div>
+          <div class="service-card values-slide"><h3>Morality</h3><p>Deeply embedded in client care, ethics and reciprocity.</p></div>
+        </div>
       </div>
     </div>
   </div>
@@ -212,6 +192,9 @@
           <div><div class="author-name">George H.</div><div class="author-detail">Estate Sale</div></div>
         </div>
       </div>
+    </div>
+    <div class="testimonials-review-cta" style="text-align:center;margin-top:40px;">
+      <a href="https://share.google/IOZuWatDC1GRrAfrf" target="_blank" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;">⭐ Leave a Review on Google</a>
     </div>
   </div>
 </section>
@@ -307,8 +290,48 @@
 </footer>
 
 <script>
-  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
-  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+  const navToggle = document.getElementById('navToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  navToggle.addEventListener('click', () => { mobileNav.classList.add('open'); navToggle.classList.add('hidden'); });
+  document.getElementById('mobileClose').addEventListener('click', () => { mobileNav.classList.remove('open'); navToggle.classList.remove('hidden'); });
+
+  // Values carousel — auto-rotate on mobile
+  (function() {
+    const track = document.getElementById('valuesTrack');
+    if (!track) return;
+
+    const slides = Array.from(track.querySelectorAll('.values-slide'));
+    // Duplicate for seamless loop
+    slides.forEach(s => track.appendChild(s.cloneNode(true)));
+
+    let current = 0;
+    const total = slides.length;
+    let animating = false;
+
+    function getSlideWidth() {
+      const s = track.querySelector('.values-slide');
+      return s ? s.offsetWidth + 16 : 240; // 16px gap
+    }
+
+    function advance() {
+      if (animating) return;
+      animating = true;
+      current++;
+      track.style.transition = 'transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)';
+      track.style.transform = `translateX(-${current * getSlideWidth()}px)`;
+
+      setTimeout(() => {
+        if (current >= total) {
+          track.style.transition = 'none';
+          current = 0;
+          track.style.transform = 'translateX(0)';
+        }
+        animating = false;
+      }, 780);
+    }
+
+    setInterval(advance, 2200);
+  })();
 </script>
 </body>
 </html>
