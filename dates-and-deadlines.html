@@ -170,8 +170,8 @@
 
         <div class="field">
           <label for="price">Home price <span class="val" id="priceVal"></span></label>
-          <input type="range" id="price" min="100000" max="600000" step="1000" value="250000">
-          <button type="button" class="chip" id="medianBtn">Brainerd median is about $248K</button>
+          <input type="range" id="price" min="100000" max="800000" step="1000" value="355000">
+          <button type="button" class="chip" id="medianBtn">Minnesota median is about $355K</button>
         </div>
 
         <div class="field">
@@ -198,8 +198,8 @@
 
         <div class="field">
           <label for="tax">Property tax rate (% per year)</label>
-          <input type="number" id="tax" min="0" max="5" step="0.01" value="0.61" inputmode="decimal">
-          <p class="hint">Starts at the Crow Wing County median. Rates vary by county, so use yours.</p>
+          <input type="number" id="tax" min="0" max="5" step="0.01" value="1.13" inputmode="decimal">
+          <p class="hint">Starts at the Minnesota statewide median. Rates vary by county and city, so use yours.</p>
         </div>
 
         <div class="field">
@@ -263,16 +263,16 @@
 
         <section class="panel market" aria-labelledby="mktTitle">
           <div>
-            <h2 class="sec-title" id="mktTitle">Brainerd area snapshot</h2>
-            <p class="sec-sub">Sample market, September 2026, Brainerd city</p>
+            <h2 class="sec-title" id="mktTitle">Minnesota market snapshot</h2>
+            <p class="sec-sub">September 2026, statewide</p>
           </div>
           <div class="mstats">
-            <div class="mstat"><div class="v">$247,882</div><div class="k">Median sale price</div></div>
-            <div class="mstat"><div class="v">35 days</div><div class="k">Median time on market, up from 15 a year ago</div></div>
-            <div class="mstat"><div class="v">98.4%</div><div class="k">Sale price vs. list price</div></div>
-            <div class="mstat"><div class="v">35.7%</div><div class="k">Of homes had a price drop</div></div>
+            <div class="mstat"><div class="v">$354,900</div><div class="k">Statewide median sale price</div></div>
+            <div class="mstat"><div class="v">$395,000</div><div class="k">Twin Cities 7-county median</div></div>
+            <div class="mstat"><div class="v">45 days</div><div class="k">Median time on market, up from 41 a year ago</div></div>
+            <div class="mstat"><div class="v">1.13%</div><div class="k">Median effective property tax rate</div></div>
           </div>
-          <p>Homes are sitting longer and more sellers are dropping prices, which is good news for a winter buyer. Property tax starts at the Crow Wing County median effective rate of 0.61%. Sources: <a href="https://www.redfin.com/city/1906/MN/Brainerd/housing-market" target="_blank" rel="noopener">Redfin</a>, <a href="https://ownwell.com/trends/minnesota/crow-wing-county" target="_blank" rel="noopener">Ownwell</a>.</p>
+          <p>Prices were down slightly from a year ago and homes are taking a bit longer to sell, which can give buyers more room to negotiate. Medians do not include seller concessions or down payment assistance. Prices and tax rates vary a lot by city and county, so adjust the price and tax rate above to match your search. Sources: <a href="https://my.mnrealtor.com/about-us/marketreports" target="_blank" rel="noopener">Minnesota Realtors</a>, <a href="https://www.ownwell.com/trends/minnesota" target="_blank" rel="noopener">Ownwell</a>.</p>
         </section>
 
         <section aria-labelledby="tlTitle">
@@ -408,7 +408,7 @@
       mi = base * pm / 12; miLabel = 'Private mortgage insurance';
     }
     var pi = r > 0 ? loan * r / (1 - Math.pow(1 + r, -n)) : loan / n;
-    var taxPct = parseFloat(el.tax.value); if (isNaN(taxPct) || taxPct < 0) taxPct = 0.61;
+    var taxPct = parseFloat(el.tax.value); if (isNaN(taxPct) || taxPct < 0) taxPct = 1.13;
     var tax = price * taxPct / 100 / 12;
     var ins = Math.max(0, +el.ins.value || 0);
     var closing = price * CLOSING_PCT;
@@ -603,7 +603,7 @@
   [el.typeConv, el.typeFha].forEach(function (r) {
     r.addEventListener('change', function () { el.rate.value = RATES[loanType()].rate; render(); });
   });
-  el.medianBtn.addEventListener('click', function () { el.price.value = 248000; render(); });
+  el.medianBtn.addEventListener('click', function () { el.price.value = 355000; render(); });
   el.icsBtn.addEventListener('click', function () {
     try {
       var blob = new Blob([buildIcs(current)], { type: 'text/calendar;charset=utf-8' });
@@ -624,6 +624,7 @@
   });
 
   loadState();
+  if (!new URLSearchParams(location.search).has('start')) { var now = new Date(); el.start.value = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()); }
   if (!new URLSearchParams(location.search).has('rate')) el.rate.value = RATES[loanType()].rate;
   render();
 })();
