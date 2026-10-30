@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dates &amp; Deadlines | @BensEstates</title>
+  <meta name="description" content="Plan your home purchase. Move the price, down payment, and start date to see your lender deadlines, contract deadlines, closing timeline, and estimated monthly payment." />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-512.png" />
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+/* Dates & Deadlines tool. Scoped to .dd so nothing leaks into the rest of the site. */
+.dd { color-scheme: dark; font-variant-numeric: lining-nums; --seg1: #c8a86a; --seg2: #f0ede8; --seg3: #6f6f6f; --seg4: #e6d6ad; --note: #e0c07a; --note-bg: rgba(200, 168, 106, 0.1); }
+.dd p { line-height: 1.6; }
+.dd-layout { display: grid; grid-template-columns: 1fr; gap: 28px; }
+@media (min-width: 920px) {
+  .dd-layout { grid-template-columns: 340px minmax(0, 1fr); gap: 40px; align-items: start; }
+  .dd .controls { position: sticky; top: 100px; }
+}
+.dd .panel { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
+.dd .controls { display: flex; flex-direction: column; gap: 20px; }
+.dd .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.dd .field > label, .dd .field .lbl { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.dd .field .val { color: var(--text-primary); letter-spacing: 0.02em; text-transform: none; font-size: 0.95rem; font-weight: 500; text-align: right; }
+.dd input[type=range] { width: 100%; accent-color: var(--color-accent); margin: 4px 0; background: transparent; }
+.dd input[type=text], .dd input[type=number], .dd input[type=date] { width: 100%; min-width: 0; padding: 11px 12px; background: var(--bg-3); border: 1px solid var(--border-hover); border-radius: var(--radius); color: var(--text-primary); font: inherit; font-size: 16px; }
+.dd input:focus-visible, .dd button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.dd .hint { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.45; }
+.dd .chip { align-self: flex-start; background: var(--color-accent-dim); color: var(--color-accent); border: 1px solid var(--color-accent-border); padding: 6px 12px; border-radius: 100px; font-size: 0.78rem; font-weight: 500; }
+.dd .chip:hover { background: var(--color-accent); color: #080808; }
+.dd .seg { position: relative; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border-hover); border-radius: var(--radius); overflow: hidden; }
+.dd .seg input { position: absolute; opacity: 0; pointer-events: none; }
+.dd .seg label { display: block; padding: 11px 8px; text-align: center; cursor: pointer; background: var(--bg-3); color: var(--text-primary); font-size: 0.9rem; font-weight: 500; }
+.dd .seg input:checked + label { background: var(--color-accent); color: #080808; }
+.dd .seg input:focus-visible + label { outline: 2px solid var(--text-primary); outline-offset: -3px; }
+.dd .check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text-secondary); cursor: pointer; }
+.dd .check input { margin-top: 4px; accent-color: var(--color-accent); }
+.dd .actions { display: flex; flex-direction: column; gap: 10px; padding-top: 18px; border-top: 1px solid var(--border); }
+.dd .actions .btn { width: 100%; justify-content: center; text-align: center; }
+.dd .status { font-size: 0.82rem; color: var(--color-accent); min-height: 1.3em; }
+
+.dd .main { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.dd .sec-title { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; line-height: 1.2; margin-bottom: 4px; text-wrap: balance; }
+.dd .sec-sub { color: var(--text-secondary); font-size: 0.88rem; }
+.dd .pay { display: grid; gap: 22px; }
+.dd .pay-big { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.dd .pay-num { font-family: var(--font-serif); font-size: clamp(2.8rem, 9vw, 4.4rem); line-height: 1; font-weight: 400; color: var(--text-primary); }
+.dd .pay-unit { color: var(--text-secondary); font-size: 0.95rem; }
+.dd .bar { display: flex; height: 12px; border-radius: 2px; overflow: hidden; background: var(--bg-4); }
+.dd .bar span { display: block; height: 100%; }
+.dd .rows { display: grid; gap: 10px; }
+.dd .row { display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text-primary); }
+.dd .dot { width: 10px; height: 10px; border-radius: 2px; }
+.dd .row .amt { font-weight: 500; }
+.dd .row small { color: var(--text-secondary); }
+.dd .cash { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding-top: 18px; border-top: 1px solid var(--border); }
+.dd .cash > div { min-width: 0; }
+.dd .cash .k { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; }
+.dd .cash .v { font-family: var(--font-serif); font-size: 1.6rem; color: var(--text-primary); }
+.dd .cash .s { font-size: 0.8rem; color: var(--text-secondary); }
+
+.dd .keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.dd .key { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; background: var(--bg-2); min-width: 0; }
+.dd .key.hot { background: var(--color-accent-dim); border-color: var(--color-accent-border); }
+.dd .key .k { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; }
+.dd .key .v { font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.2; margin-top: 6px; color: var(--text-primary); }
+.dd .key .s { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+.dd .market { display: grid; gap: 16px; }
+.dd .mstats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+.dd .mstat .v { font-family: var(--font-serif); font-size: 1.7rem; color: var(--text-primary); }
+.dd .mstat .k { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+.dd .market p { font-size: 0.85rem; }
+.dd .market a, .dd .fine a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.dd .timeline { list-style: none; padding: 0; margin: 0; }
+.dd .phase { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 28px 0 10px; border-bottom: 1px solid rgba(240, 237, 232, 0.35); font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; color: var(--color-accent); }
+.dd .phase:first-child { padding-top: 0; }
+.dd .phase .rng { letter-spacing: 0.04em; text-transform: none; color: var(--text-secondary); font-weight: 400; font-size: 0.85rem; }
+.dd .item { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--border); list-style: none; }
+.dd .when { display: flex; flex-direction: column; line-height: 1.2; gap: 2px; }
+.dd .when .dow { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); font-weight: 600; }
+.dd .when .md { font-family: var(--font-serif); font-size: 1.3rem; color: var(--text-primary); }
+.dd .when .yr { font-size: 0.74rem; color: var(--text-secondary); }
+.dd .what h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; line-height: 1.35; letter-spacing: 0.01em; color: var(--text-primary); }
+.dd .what p { color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px; max-width: 62ch; }
+.dd .what p.note { display: inline-block; color: var(--note); background: var(--note-bg); padding: 6px 10px; border-radius: var(--radius); font-size: 0.8rem; margin-top: 8px; }
+.dd .item.milestone .md { color: var(--color-accent); }
+
+.dd .tbl { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-2); }
+.dd .tbl table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 0.88rem; }
+.dd .tbl th { text-align: left; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; background: var(--bg-3); color: var(--text-primary); padding: 12px; font-weight: 600; }
+.dd .tbl td { padding: 12px; border-top: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); }
+.dd .tbl td:first-child { width: 36px; }
+.dd .tbl td:nth-child(2) { font-weight: 600; width: 26%; color: var(--text-primary); }
+.dd .tbl td:nth-child(3) { width: 25%; background: rgba(200, 168, 106, 0.07); color: var(--text-primary); }
+
+.dd .callout { background: var(--color-accent-dim); border-color: var(--color-accent-border); }
+.dd .callout p { max-width: 62ch; margin-top: 8px; color: var(--text-primary); }
+.dd .fine ul { list-style: disc; padding-left: 1.2em; display: grid; gap: 12px; margin-top: 14px; }
+.dd .fine li { font-size: 0.88rem; color: var(--text-secondary); max-width: 78ch; line-height: 1.6; }
+.dd .fine li b { color: var(--text-primary); font-weight: 600; }
+
+@media (max-width: 540px) {
+  .dd .item { grid-template-columns: 74px minmax(0, 1fr); gap: 14px; }
+  .dd .panel { padding: 18px; }
+}
+  </style>
+</head>
+<body>
+
+<header class="site-header solid" id="header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo-bs-white.png" alt="Ben's Estates" class="logo-img" style="height:44px;width:auto;" /></a>
+    <nav class="nav-links">
+      <a href="sold.html">Sold Properties</a>
+      <a href="neighborhoods.html">Neighborhoods</a>
+      <a href="home-valuation.html">Home Valuation</a>
+      <div class="nav-dropdown">
+        <a href="buyers.html" class="active">Buyers</a>
+        <div class="dropdown-menu">
+          <a href="buyers.html">Buyer's Guide</a>
+          <a href="dates-and-deadlines.html">Dates &amp; Deadlines</a>
+        </div>
+      </div>
+      <a href="sellers.html">Sellers</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="tel:+17634478781" class="nav-phone">(763) 447-8781</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get In Touch</a>
+    </div>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="sold.html">Sold Properties</a>
+  <a href="neighborhoods.html">Neighborhoods</a>
+  <a href="home-valuation.html">Home Valuation</a>
+  <a href="buyers.html">Buyers Guide</a>
+  <a href="dates-and-deadlines.html">Dates &amp; Deadlines</a>
+  <a href="sellers.html">Sellers Guide</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+</div>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> › <a href="buyers.html">Buyers</a> › Dates &amp; Deadlines</div>
+  <h1 id="pageTitle">Dates &amp; Deadlines</h1>
+  <p>Move the price, down payment, and start date. Your lender deadlines, closing timeline, and estimated monthly payment update on the spot.</p>
+</div>
+
+<section class="section dd">
+  <div class="container">
+    <div class="dd-layout">
+
+      <aside class="panel controls" aria-label="Your numbers">
+        <div class="field">
+          <label for="name">Prepared for (optional)</label>
+          <input type="text" id="name" placeholder="Your name" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="price">Home price <span class="val" id="priceVal"></span></label>
+          <input type="range" id="price" min="100000" max="600000" step="1000" value="250000">
+          <button type="button" class="chip" id="medianBtn">Brainerd median is about $248K</button>
+        </div>
+
+        <div class="field">
+          <label for="down">Down payment <span class="val" id="downVal"></span></label>
+          <input type="range" id="down" min="3" max="30" step="0.5" value="5">
+          <p class="hint" id="downHint"></p>
+        </div>
+
+        <div class="field">
+          <span class="lbl">Loan type</span>
+          <div class="seg" role="radiogroup" aria-label="Loan type">
+            <input type="radio" name="type" id="typeConv" value="conv" checked>
+            <label for="typeConv">Conventional</label>
+            <input type="radio" name="type" id="typeFha" value="fha">
+            <label for="typeFha">FHA</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="rate">Interest rate (%)</label>
+          <input type="number" id="rate" min="2" max="12" step="0.125" value="7.32" inputmode="decimal">
+          <p class="hint" id="rateHint"></p>
+        </div>
+
+        <div class="field">
+          <label for="tax">Property tax rate (% per year)</label>
+          <input type="number" id="tax" min="0" max="5" step="0.01" value="0.61" inputmode="decimal">
+          <p class="hint">Starts at the Crow Wing County median. Rates vary by county, so use yours.</p>
+        </div>
+
+        <div class="field">
+          <label for="ins">Home insurance per month</label>
+          <input type="number" id="ins" min="0" max="1000" step="10" value="300" inputmode="numeric">
+          <p class="hint">Starts at a $300 average. Lenders require it, so use your quote once you have one.</p>
+        </div>
+
+        <div class="field">
+          <label for="start">Start date</label>
+          <input type="date" id="start" value="2026-11-02">
+          <p class="hint">The day you begin talking to lenders.</p>
+        </div>
+
+        <div class="field">
+          <label for="weeks">Time to shop <span class="val" id="weeksVal"></span></label>
+          <input type="range" id="weeks" min="2" max="20" step="1" value="8">
+          <p class="hint">Weeks of touring before you expect to have an offer accepted.</p>
+        </div>
+
+        <div class="field">
+          <label for="closeDays">Acceptance to closing <span class="val" id="closeVal"></span></label>
+          <input type="range" id="closeDays" min="21" max="60" step="1" value="35">
+          <p class="hint">Most purchases close 30 to 45 days after acceptance. Confirm with title and your lender before you promise a date.</p>
+        </div>
+
+        <div class="field">
+          <label for="insp">Inspection period (days)</label>
+          <input type="number" id="insp" min="1" max="30" step="1" value="10" inputmode="numeric">
+          <p class="hint">Calendar days from acceptance, unless your purchase agreement says business days.</p>
+        </div>
+
+        <label class="check" for="seasonal">
+          <input type="checkbox" id="seasonal">
+          <span>My income is seasonal or changes through the year</span>
+        </label>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="icsBtn">Add dates to my calendar</button>
+          <button type="button" class="btn btn-outline" id="copyBtn">Copy a link to these settings</button>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </div>
+      </aside>
+
+      <div class="main">
+        <section class="panel pay" aria-labelledby="payTitle">
+          <div>
+            <h2 class="sec-title" id="payTitle">Estimated monthly payment</h2>
+            <p class="sec-sub" id="paySub"></p>
+          </div>
+          <div class="pay-big"><span class="pay-num" id="payNum"></span><span class="pay-unit">per month, all in</span></div>
+          <div class="bar" id="bar" aria-hidden="true"></div>
+          <div class="rows" id="rows"></div>
+          <div class="cash" id="cash"></div>
+        </section>
+
+        <section aria-labelledby="keyTitle">
+          <h2 class="sec-title" id="keyTitle">Your three big dates</h2>
+          <div class="keys" id="keys" style="margin-top:14px"></div>
+        </section>
+
+        <section class="panel market" aria-labelledby="mktTitle">
+          <div>
+            <h2 class="sec-title" id="mktTitle">Brainerd area snapshot</h2>
+            <p class="sec-sub">Sample market, September 2026, Brainerd city</p>
+          </div>
+          <div class="mstats">
+            <div class="mstat"><div class="v">$247,882</div><div class="k">Median sale price</div></div>
+            <div class="mstat"><div class="v">35 days</div><div class="k">Median time on market, up from 15 a year ago</div></div>
+            <div class="mstat"><div class="v">98.4%</div><div class="k">Sale price vs. list price</div></div>
+            <div class="mstat"><div class="v">35.7%</div><div class="k">Of homes had a price drop</div></div>
+          </div>
+          <p>Homes are sitting longer and more sellers are dropping prices, which is good news for a winter buyer. Property tax starts at the Crow Wing County median effective rate of 0.61%. Sources: <a href="https://www.redfin.com/city/1906/MN/Brainerd/housing-market" target="_blank" rel="noopener">Redfin</a>, <a href="https://ownwell.com/trends/minnesota/crow-wing-county" target="_blank" rel="noopener">Ownwell</a>.</p>
+        </section>
+
+        <section aria-labelledby="tlTitle">
+          <h2 class="sec-title" id="tlTitle">Your roadmap</h2>
+          <p class="sec-sub" style="margin-bottom:18px">Lender steps land on weekdays. Contract dates count calendar days from acceptance. Every date moves when you change the start date.</p>
+          <ol class="timeline" id="timeline"></ol>
+        </section>
+
+        <section aria-labelledby="dlTitle">
+          <h2 class="sec-title" id="dlTitle">Your contract deadlines</h2>
+          <p class="sec-sub" style="margin-bottom:14px">Your fill-in sheet for the day you go under contract. These are targets counted from final acceptance. Your purchase agreement has the final say.</p>
+          <div class="tbl"><table><thead><tr><th>#</th><th>Item</th><th>Date or amount</th><th>Notes</th></tr></thead><tbody id="dl"></tbody></table></div>
+        </section>
+
+        <section class="panel callout" aria-labelledby="killTitle">
+          <h2 class="sec-title" id="killTitle">The three that kill deals</h2>
+          <p>A missed inspection resolution deadline, a low appraisal nobody planned for, and a buyer who financed furniture before closing. Let's talk about all three on day one.</p>
+        </section>
+
+        <section class="panel fine" aria-labelledby="fineTitle">
+          <h2 class="sec-title" id="fineTitle">Good to know</h2>
+          <ul>
+            <li><b>These are estimates, not offers.</b> The starting rates are national averages for the week of October 22, 2026: 7.32% for a 30-year conventional loan (Freddie Mac) and 7.22% for a 30-year FHA loan (Mortgage Reports). Your real rate depends on your credit, down payment, loan type, and lender, and it can come in lower.</li>
+            <li><b>Savings are not counted here.</b> This does not include lender credits, discount points, rate buydowns, seller concessions, or down payment assistance programs, such as Minnesota Housing programs, that can lower your rate, your payment, or your cash to close. Ask each lender what you qualify for.</li>
+            <li><b>Rates move.</b> They change often, and many buyers look at refinancing later if rates improve. No one can promise where they will go.</li>
+            <li><b>Placeholders.</b> Property tax, insurance, mortgage insurance, and closing costs (set at 3% of price) are typical figures. Real amounts depend on the home, the lender, and your coverage.</li>
+            <li><b>Your purchase agreement controls.</b> Contract dates here count calendar days from final acceptance unless your agreement says otherwise. Nothing changes without a signed amendment, not a text message. Lenders, sellers, inspectors, and appraisers set the real dates, so treat these as a plan to stay ahead of, not a guarantee.</li>
+            <li><b>The Closing Disclosure rule is federal.</b> Your lender must deliver it 3 business days before closing, and if it is late, the closing date moves. Always confirm wire instructions by phone using a number you already had, never one from an email.</li>
+            <li><b>Talk to a licensed lender</b> for a loan estimate and advice on your own situation. This page is not a loan offer, a commitment to lend, or financial or legal advice.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--bg-2);">
+  <div class="container section-center" style="max-width:720px;">
+    <span class="section-label">Questions about your numbers?</span>
+    <h2 class="mb-16">Let's Walk Through It Together</h2>
+    <p class="mb-24">Send me your price range and timeline and I'll help you line up lenders and plan your dates. No pressure, no cost to you as a buyer.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+      <a href="tel:+17634478781" class="btn btn-outline">(763) 447-8781</a>
+    </div>
+    <p style="margin-top:20px;font-size:.88rem;"><a href="mailto:BensEstates@gmail.com" style="color:var(--text-secondary);">BensEstates@gmail.com</a></p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+        <div class="footer-brand">
+      <img src="images/logo-bs-white.png" alt="Ben's Estates" style="height:52px;width:auto;margin-bottom:16px;" />
+      <p>Serving Minneapolis, Twin Cities, and surrounding communities with honesty, expertise, and a commitment to finding you the perfect home.</p>
+      <div class="social-links" style="margin-top:24px;">
+        <a href="https://facebook.com/bensestates" class="social-link" title="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com/bensestates" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://youtube.com/bensestates" class="social-link" title="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://tiktok.com/@bensestates" class="social-link" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.zillow.com/profile/IGBensEstates" class="social-link" title="Zillow" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0 .5 9.3l1.6 2L4 9.9V22h6.4v-6.2h3.2V22H20V9.9l1.9 1.4 1.6-2Z"/></svg></a>
+        <a href="https://linktr.ee/bensestates" class="social-link" title="Linktree" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="m13.511 5.853 4.005-4.117 2.2 2.126-4.116 4.005h5.99v3.04h-6.06l4.176 4.276-2.202 2.127-5.566-5.567-5.517 5.567-2.201-2.127 4.176-4.276H2.416v-3.04h5.99L4.29 3.862l2.2-2.126 4.006 4.117V0h3.015v5.853zM10.496 20.389v-7.836h3.015v7.836h-3.015z"/></svg></a>
+        <a href="https://share.google/MOJcwrtn4jOWiQxQ8" class="social-link" title="Google Reviews" target="_blank"><i class="fa-brands fa-google"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h5>Properties</h5><ul><li><a href="sold.html">Sold Properties</a></li>
+      <li><a href="home-valuation.html">Home Valuation</a></li><li><a href="neighborhoods.html">Neighborhoods</a></li>
+    </ul></div>
+    <div class="footer-col"><h5>Resources</h5><ul>
+      <li><a href="buyers.html">Buyer's Guide</a></li><li><a href="dates-and-deadlines.html">Dates &amp; Deadlines</a></li><li><a href="sellers.html">Seller's Guide</a></li>
+      <li><a href="about.html">About Me</a></li><li><a href="contact.html">Contact</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 @BensEstates All rights reserved.</span>
+    <div class="footer-vaura-inline">
+      <span class="powered-label">Powered by</span>
+      <img src="images/logo-vaura-white.png" alt="Vaura, Digital Branding and Marketing" />
+      <span>Vaura, Digital Branding &amp; Marketing</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('open'));
+  document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+  var RATES = {
+    conv: { rate: 7.32, text: 'Starts at the 30-year conventional national average (Freddie Mac, Oct 22, 2026). Change it to match a lender quote.' },
+    fha: { rate: 7.22, text: 'Starts at the 30-year FHA national average (Mortgage Reports, Oct 23, 2026). Change it to match a lender quote.' }
+  };
+  var CLOSING_PCT = 0.03;
+  var EARNEST_PCT = 0.01;
+
+  var el = {};
+  ['name','price','priceVal','down','downVal','downHint','rate','rateHint','ins','start','weeks','weeksVal','seasonal',
+   'medianBtn','icsBtn','copyBtn','status','payNum','paySub','bar','rows','cash','keys','timeline','pageTitle','typeConv','typeFha','closeDays','closeVal','insp','dl','tax']
+    .forEach(function (id) { el[id] = $(id); });
+
+  function loanType() { return el.typeFha.checked ? 'fha' : 'conv'; }
+
+  /* ---------- date helpers ---------- */
+  function addDays(d, n) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); return x; }
+  function toBiz(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); var w = x.getDay(); if (w === 6) x = addDays(x, 2); else if (w === 0) x = addDays(x, 1); return x; }
+  function subBiz(d, n) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); var c = 0; while (c < n) { x = addDays(x, -1); var w = x.getDay(); if (w !== 0 && w !== 6) c++; } return x; }
+  function parseDate(s) { var p = (s || '').split('-').map(Number); if (p.length !== 3 || !p[0]) return new Date(2026, 10, 2); return new Date(p[0], p[1] - 1, p[2]); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function ymd(d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()); }
+  function fmtShort(d) { return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
+  function fmtLong(d) { return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); }
+  function holidayNote(d) {
+    var m = d.getMonth(), day = d.getDate();
+    if (m === 10 && day >= 25 && day <= 27 && d.getFullYear() === 2026) return 'Thanksgiving week. Offices and lenders may be closed or slow, so plan around it.';
+    if ((m === 11 && day >= 23) || (m === 0 && day <= 2)) return 'Holiday week. Expect slower responses and closures, so get ahead of this one.';
+    return '';
+  }
+
+  /* ---------- money ---------- */
+  function compute() {
+    var price = +el.price.value, downPct = +el.down.value / 100, type = loanType();
+    var ratePct = parseFloat(el.rate.value); if (isNaN(ratePct)) ratePct = RATES[type].rate;
+    var r = ratePct / 100 / 12, n = 360;
+    var down = price * downPct, base = price - down, loan = base, upfront = 0, mi = 0, miLabel = '';
+    if (type === 'fha') {
+      upfront = base * 0.0175; loan = base + upfront;
+      mi = base * (downPct < 0.05 ? 0.0055 : 0.005) / 12; miLabel = 'FHA mortgage insurance';
+    } else if (downPct < 0.2) {
+      var pm = downPct < 0.10 ? 0.0075 : (downPct < 0.15 ? 0.0055 : 0.0035);
+      mi = base * pm / 12; miLabel = 'Private mortgage insurance';
+    }
+    var pi = r > 0 ? loan * r / (1 - Math.pow(1 + r, -n)) : loan / n;
+    var taxPct = parseFloat(el.tax.value); if (isNaN(taxPct) || taxPct < 0) taxPct = 0.61;
+    var tax = price * taxPct / 100 / 12;
+    var ins = Math.max(0, +el.ins.value || 0);
+    var closing = price * CLOSING_PCT;
+    return { price: price, downPct: downPct, down: down, base: base, loan: loan, upfront: upfront, mi: mi, miLabel: miLabel, pi: pi, tax: tax, ins: ins,
+             taxPct: taxPct, total: pi + tax + ins + mi, closing: closing, cash: down + closing, earnest: price * EARNEST_PCT, ratePct: ratePct, type: type };
+  }
+
+  function renderMoney(c) {
+    el.priceVal.textContent = money(c.price);
+    el.downVal.textContent = (c.downPct * 100).toFixed(c.downPct * 100 % 1 ? 1 : 0) + '% \u00b7 ' + money(c.down);
+    el.weeksVal.textContent = el.weeks.value + ' weeks';
+    el.closeVal.textContent = el.closeDays.value + ' days';
+    el.downHint.textContent = c.type === 'fha' ? 'FHA allows as little as 3.5% down.' : (c.downPct >= 0.2 ? 'At 20% or more, mortgage insurance is not required.' : 'Conventional loans can go as low as 3% down. Under 20% adds mortgage insurance.');
+    el.rateHint.textContent = RATES[c.type].text;
+    el.payNum.textContent = money(c.total);
+    el.paySub.textContent = (c.type === 'fha' ? 'FHA' : 'Conventional') + ' 30-year fixed at ' + c.ratePct.toFixed(3).replace(/0$/, '') + '% on a loan of ' + money(c.loan) + (c.upfront ? ' (includes the ' + money(c.upfront) + ' upfront FHA fee).' : '.');
+
+    var parts = [
+      { k: 'Principal and interest', v: c.pi, c: 'var(--seg1)' },
+      { k: 'Property tax', v: c.tax, c: 'var(--seg2)', s: 'est. ' + c.taxPct + '% of price per year' },
+      { k: 'Home insurance', v: c.ins, c: 'var(--seg3)', s: 'est. average' }
+    ];
+    if (c.mi > 0) parts.push({ k: c.miLabel, v: c.mi, c: 'var(--seg4)', s: 'est.' });
+    el.bar.innerHTML = parts.map(function (p) { return '<span style="width:' + (p.v / c.total * 100).toFixed(2) + '%;background:' + p.c + '"></span>'; }).join('');
+    el.rows.innerHTML = parts.map(function (p) {
+      return '<div class="row"><span class="dot" style="background:' + p.c + '"></span><span>' + p.k + (p.s ? ' <small>' + p.s + '</small>' : '') + '</span><span class="amt">' + money(p.v) + '</span></div>';
+    }).join('');
+    el.cash.innerHTML =
+      '<div><div class="k">Down payment</div><div class="v">' + money(c.down) + '</div></div>' +
+      '<div><div class="k">Closing costs</div><div class="v">' + money(c.closing) + '</div><div class="s">estimated at 3%</div></div>' +
+      '<div><div class="k">Cash to close</div><div class="v">' + money(c.cash) + '</div><div class="s">before any credits or assistance</div></div>';
+  }
+
+  /* ---------- timeline ---------- */
+  function prevBiz(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); var w = x.getDay(); if (w === 6) x = addDays(x, -1); else if (w === 0) x = addDays(x, -2); return x; }
+
+  function buildItems(c) {
+    var S = parseDate(el.start.value), weeks = +el.weeks.value, closeDays = +el.closeDays.value;
+    var insp = Math.max(1, Math.min(30, parseInt(el.insp.value, 10) || 10));
+    var P = toBiz(addDays(S, 21));
+    var O = toBiz(addDays(P, weeks * 7));
+    var C = toBiz(addDays(O, closeDays));
+    var d = function (n) { return addDays(O, n); };
+    var P60 = addDays(P, 60), P90 = addDays(P, 90);
+    var inspDeadline = d(insp);
+    var inspDay = prevBiz(d(Math.min(5, Math.max(2, insp - 3))));
+    var cd = subBiz(C, 3), walk = prevBiz(addDays(C, -2)), wire = prevBiz(addDays(C, -1));
+    var loanOk = d(30), capLoan = subBiz(C, 4); if (capLoan < loanOk) loanOk = capLoan;
+    var seasonalTip = el.seasonal.checked ? ' Seasonal or changing income: lenders usually want a two-year history, so ask each one how they count it and send paperwork early.' : '';
+    var items = [];
+    function add(phase, date, title, text, extra) { var it = { phase: phase, date: date, title: title, text: text, milestone: false }; if (extra) for (var k in extra) it[k] = extra[k]; items.push(it); }
+
+    add('Lenders', S, 'Kick off with your lenders', 'Pick two or three lenders from my recommended list and book a call with each. Starting early is starting on time.');
+    add('Lenders', toBiz(addDays(S, 3)), 'Request loan estimates', 'Ask each lender for a loan estimate on the same price and down payment. Keep it within about two weeks so the credit checks count as one.');
+    add('Lenders', toBiz(addDays(S, 7)), 'Send your documents', 'Two years of W-2s or tax returns, your last 30 days of paystubs, two months of bank statements, and a photo ID. Avoid new credit, big purchases, and job changes from here on.' + seasonalTip);
+    add('Lenders', toBiz(addDays(S, 14)), 'Compare and choose a lender', 'Line up rate, fees, and APR side by side. Ask each lender about credits, points, and assistance programs that could lower your cost.');
+    add('Lenders', P, 'Pre-approval letter in hand', 'This is what you attach to offers. It is usually good for 60 to 90 days, which for you runs about ' + fmtShort(P60) + ' to ' + fmtShort(P90) + '.', { milestone: true });
+
+    add('Shopping', P, 'Start touring homes', 'Set up search alerts for your target area and tour with me. Winter usually means less competition and more room to negotiate.');
+    if (O > P60) add('Shopping', toBiz(addDays(P, 53)), 'Refresh your pre-approval', 'Your offer date lands past the 60-day mark. Ask your lender to refresh the letter before you write an offer.');
+
+    add('Under contract', O, 'Final acceptance', 'Fully executed purchase agreement goes to all parties. Send the signed copy the same day. This starts the deadline chain. Call your lender to lock your rate; locks commonly run 30 to 60 days.', { milestone: true, day: 'Day 0' });
+    add('Under contract', d(1), 'Open the file', 'Deliver the purchase agreement to title and your lender. Confirm the earnest money route. Verify any wire instructions by phone, never from an email.', { day: 'Day 0 to 1' });
+    add('Under contract', d(3), 'Earnest money delivered', 'Get the receipt and confirm the broker has it. Usually about ' + money(c.earnest) + ' (1% of the price), per your agreement.', { day: 'Day 1 to 3' });
+    add('Under contract', d(3), 'Inspection booked', 'Book it the day you go under contract. Good inspectors are 5 to 10 days out in season.', { day: 'Day 1 to 3' });
+    add('Under contract', inspDay, 'Home inspection', 'Attend if you can. Get bids for anything big so you know what to ask for.', { day: 'Day ' + Math.round((inspDay - O) / 86400000) });
+    add('Under contract', d(7), 'Loan application', 'Complete the full application. Your lender orders the appraisal.', { day: 'Day 3 to 7' });
+    add('Under contract', inspDeadline, 'Inspection resolution deadline', 'Deliver the amendment before this date, not just the inspection report.', { milestone: true, day: 'Day ' + insp, note: 'Miss it and the contingency is gone.' });
+    add('Under contract', d(14), 'Title commitment', 'Review for liens, easements, and encroachments. Raise objections in writing.', { day: 'Day 7 to 14' });
+    add('Under contract', d(14), 'HOA or association documents', 'If the home has an association, you receive the documents and your statutory cancellation clock runs from the day you get them.', { day: 'Day 7 to 14' });
+    add('Under contract', d(21), 'Appraisal', 'If it comes in low, you renegotiate, cover the gap, or cancel. Talk about this before it happens.', { day: 'Day 10 to 21' });
+    add('Under contract', loanOk, 'Loan approval', 'Final underwriting. No new credit, job changes, or moving money until you close.', { day: 'Day 21 to 30' });
+
+    add('Closing', cd, 'Closing Disclosure arrives', 'It must reach you 3 business days before closing. A late disclosure moves your closing date.', { day: '3 business days out' });
+    add('Closing', walk, 'Final walk-through', 'Verify condition, agreed repairs, and that everything conveying is still there.', { day: '1 to 2 days out' });
+    add('Closing', wire, 'Wire and cash to close', 'Call title on a number you already had to verify wire instructions. Bring or send about ' + money(c.cash) + ' before any credits.', { day: '1 day out' });
+    add('Closing', C, 'Closing day', 'Sign, fund, record, and get your keys. Confirm possession time in writing.', { milestone: true, day: 'Day ' + closeDays });
+
+    items.forEach(function (it) { it.holiday = holidayNote(it.date); });
+    return { S: S, P: P, O: O, C: C, d: d, insp: insp, inspDay: inspDay, inspDeadline: inspDeadline, cd: cd, walk: walk, wire: wire, items: items };
+  }
+
+  function renderTimeline(t) {
+    var order = ['Lenders', 'Shopping', 'Under contract', 'Closing'];
+    var startYear = t.S.getFullYear(), html = '';
+    order.forEach(function (ph) {
+      var list = t.items.filter(function (i) { return i.phase === ph; });
+      if (!list.length) return;
+      list.sort(function (a, b) { return a.date - b.date; });
+      var a = list[0].date, b = list[list.length - 1].date;
+      html += '<li class="phase"><span>' + ph + '</span><span class="rng">' + (ymd(a) === ymd(b) ? fmtShort(a) : fmtShort(a) + ' to ' + fmtShort(b)) + '</span></li>';
+      list.forEach(function (i) {
+        html += '<li class="item' + (i.milestone ? ' milestone' : '') + '"><div class="when"><span class="dow">' +
+          i.date.toLocaleDateString('en-US', { weekday: 'short' }) + '</span><span class="md">' + fmtShort(i.date) + '</span>' +
+          (i.day ? '<span class="yr">' + i.day + '</span>' : '') +
+          (i.date.getFullYear() !== startYear ? '<span class="yr">' + i.date.getFullYear() + '</span>' : '') +
+          '</div><div class="what"><h3>' + i.title + '</h3><p>' + i.text + '</p>' + (i.note ? '<p class="note">' + i.note + '</p>' : '') + (i.holiday ? '<p class="note">' + i.holiday + '</p>' : '') + '</div></li>';
+      });
+    });
+    el.timeline.innerHTML = html;
+
+    var months = Math.max(1, Math.round((t.C - t.S) / 86400000 / 30.4));
+    el.keys.innerHTML =
+      '<div class="key"><div class="k">Pre-approval by</div><div class="v">' + fmtLong(t.P) + '</div><div class="s">Letter in hand, ready to shop</div></div>' +
+      '<div class="key"><div class="k">Target offer accepted</div><div class="v">' + fmtLong(t.O) + '</div><div class="s">After ' + el.weeks.value + ' weeks of touring</div></div>' +
+      '<div class="key hot"><div class="k">Estimated closing</div><div class="v">' + fmtLong(t.C) + '</div><div class="s">' + el.closeDays.value + ' days after acceptance, about ' + months + ' months from start</div></div>';
+  }
+
+  function renderDeadlines(t, c) {
+    var PA = 'Set by your purchase agreement';
+    var rows = [
+      ['Final acceptance date', fmtLong(t.O), 'Fully signed by all parties. Day 0. Everything counts from here.'],
+      ['Earnest money amount', money(c.earnest), 'About 1% of the price. Use the amount written in your purchase agreement.'],
+      ['Earnest money due to broker', 'By ' + fmtLong(t.d(3)), 'Per your agreement. Missing this is a licensing problem.'],
+      ['How earnest money is paid', 'Trust funds, wire, or check', 'Confirm the route with title on day one.'],
+      ['Inspection period', t.insp + ' days', 'Calendar days unless your agreement says business days.'],
+      ['Inspection deadline', fmtLong(t.inspDeadline), 'Acceptance plus the inspection days.'],
+      ['Inspection scheduled for', fmtLong(t.inspDay), 'Book it the day you go under contract.'],
+      ['Inspection resolution deadline', fmtLong(t.inspDeadline), 'Deadline to deliver the amendment, not just to inspect.'],
+      ['Loan application deadline', 'By ' + fmtLong(t.d(7)), 'Usually within days of acceptance.'],
+      ['HOA or association documents received', 'By ' + fmtLong(t.d(14)), 'If there is an association. Your cancellation clock starts on receipt.'],
+      ['Title commitment received', 'By ' + fmtLong(t.d(14)), 'Ordered immediately after acceptance.'],
+      ['Title objection deadline', PA, 'Read the date in your agreement.'],
+      ['Appraisal ordered / completed', fmtShort(t.d(7)) + ' / ' + fmtShort(t.d(21)), 'Your lender orders it. Follow up, do not assume.'],
+      ['Final lender written statement due', PA, 'Financing contingency removal.'],
+      ['Closing Disclosure to buyer', fmtLong(t.cd), 'At least 3 business days before closing.'],
+      ['Final walk-through', fmtLong(t.walk), '24 to 48 hours before closing.'],
+      ['Projected closing date', fmtLong(t.C), 'Confirm with title and your lender before you promise it.'],
+      ['Possession date and time', PA, 'Not always the same as closing. Put it in writing.']
+    ];
+    el.dl.innerHTML = rows.map(function (r, i) {
+      return '<tr><td>' + (i + 1) + '</td><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>';
+    }).join('');
+  }
+
+  /* ---------- calendar export ---------- */
+  function esc(s) { return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
+  function fold(line) { var out = [], s = line; while (s.length > 72) { out.push(s.slice(0, 72)); s = ' ' + s.slice(72); } out.push(s); return out; }
+  function buildIcs(t) {
+    var stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//BensEstates//Dates and Deadlines//EN', 'CALSCALE:GREGORIAN'];
+    t.items.slice().sort(function (a, b) { return a.date - b.date; }).forEach(function (i, idx) {
+      var end = addDays(i.date, 1);
+      lines.push('BEGIN:VEVENT', 'UID:' + ymd(i.date) + '-' + idx + '@bensestates', 'DTSTAMP:' + stamp,
+        'DTSTART;VALUE=DATE:' + ymd(i.date), 'DTEND;VALUE=DATE:' + ymd(end),
+        'SUMMARY:' + esc('Home buying: ' + i.title), 'DESCRIPTION:' + esc(i.text + ' (BensEstates Dates & Deadlines)'), 'END:VEVENT');
+    });
+    lines.push('END:VCALENDAR');
+    return lines.reduce(function (acc, l) { return acc.concat(fold(l)); }, []).join('\r\n');
+  }
+
+  /* ---------- state in the link ---------- */
+  var KEYS = ['name', 'price', 'down', 'rate', 'ins', 'start', 'weeks', 'closeDays', 'insp', 'tax'];
+  function saveState() {
+    try {
+      var p = new URLSearchParams();
+      KEYS.forEach(function (k) { if (el[k].value !== '') p.set(k, el[k].value); });
+      p.set('type', loanType());
+      if (el.seasonal.checked) p.set('seasonal', '1');
+      history.replaceState(null, '', '?' + p.toString());
+    } catch (e) { /* link state is a convenience only */ }
+  }
+  function loadState() {
+    try {
+      var p = new URLSearchParams(location.search);
+      KEYS.forEach(function (k) { if (p.has(k)) el[k].value = p.get(k); });
+      if (p.get('type') === 'fha') el.typeFha.checked = true;
+      if (p.get('seasonal') === '1') el.seasonal.checked = true;
+    } catch (e) { /* ignore */ }
+  }
+
+  function say(msg) { el.status.textContent = msg; setTimeout(function () { if (el.status.textContent === msg) el.status.textContent = ''; }, 3500); }
+
+  /* ---------- main render ---------- */
+  var current;
+  function render() {
+    if (loanType() === 'fha' && +el.down.value < 3.5) el.down.value = 3.5;
+    var nm = el.name.value.trim();
+    el.pageTitle.textContent = nm ? nm + '\u2019s Dates & Deadlines' : 'Dates & Deadlines';
+    var c = compute();
+    renderMoney(c);
+    current = buildItems(c);
+    renderTimeline(current);
+    renderDeadlines(current, c);
+    saveState();
+  }
+
+  ['name', 'price', 'down', 'rate', 'ins', 'start', 'weeks', 'closeDays', 'insp', 'tax', 'seasonal'].forEach(function (id) {
+    el[id].addEventListener('input', render);
+    el[id].addEventListener('change', render);
+  });
+  [el.typeConv, el.typeFha].forEach(function (r) {
+    r.addEventListener('change', function () { el.rate.value = RATES[loanType()].rate; render(); });
+  });
+  el.medianBtn.addEventListener('click', function () { el.price.value = 248000; render(); });
+  el.icsBtn.addEventListener('click', function () {
+    try {
+      var blob = new Blob([buildIcs(current)], { type: 'text/calendar;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'dates-and-deadlines.ics';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+      say('Calendar file downloaded. Open it to add every date.');
+    } catch (e) { say('Could not create the calendar file in this browser.'); }
+  });
+  el.copyBtn.addEventListener('click', function () {
+    saveState();
+    var done = function () { say('Link copied. It opens with these exact settings.'); };
+    try {
+      navigator.clipboard.writeText(location.href).then(done, function () { say('Copy the link from your address bar.'); });
+    } catch (e) { say('Copy the link from your address bar.'); }
+  });
+
+  loadState();
+  if (!new URLSearchParams(location.search).has('rate')) el.rate.value = RATES[loanType()].rate;
+  render();
+})();
+</script>
+</body>
+</html>

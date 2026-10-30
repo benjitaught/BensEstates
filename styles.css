@@ -1095,3 +1095,9 @@ em { font-style: italic; color: var(--color-accent); }
   .carousel-slide { flex: 0 0 85%; }
   .carousel-viewport { padding: 0 20px; }
 }
+
+
+/* ── Dropdown: keep hover alive across the gap, open for keyboard users ── */
+.nav-dropdown { padding-bottom: 12px; margin-bottom: -12px; }
+.dropdown-menu { top: 100%; }
+.nav-dropdown:focus-within .dropdown-menu { opacity: 1; pointer-events: all; transform: translateY(0); }
